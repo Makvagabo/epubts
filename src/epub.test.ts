@@ -1,0 +1,33 @@
+import EPub from "epub";
+import {readFileSync} from 'fs';
+
+describe('EPub', () => {
+  let epubFile: File;
+
+  beforeAll(() => {
+    const epubFileData = readFileSync('./Henry James - The Death of the Lion.epub');
+    epubFile = new File([epubFile], 'Henry James - The Death of the Lion.epub');
+  })
+
+  it('can open epub file', () => {
+    const epub = new EPub(epubFile);
+    epub.on('end', () => {
+      expect(epub.metadata.title).toEqual('The Death of the Lion');
+      expect(epub.version).toEqual('3.0');
+    });
+    epub.parse();
+  });
+
+  it('opens header', () => {
+    const epub = new EPub(epubFile);
+    epub.on('end', () => {
+      expect(epub.flow[1]['media-type']).toEqual('application/xhtml+xml');
+      expect(epub.flow[1].id).toEqual('pg-header');
+
+      epub.getChapterRaw(epub.flow[1].id, (data, err) => {
+        expect(data).toMatch(/^<\?xml.*/);
+      })
+    });
+    epub.parse();
+  });
+});

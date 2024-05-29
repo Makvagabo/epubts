@@ -1,5 +1,6 @@
 import {Options, Parser, defaults as xml2jsDefaults} from 'xml2js';
 import { EventEmitter } from "events";
+import JSZip from "jszip";
 
 import { ZipFile } from "zipfile";
 import PromiseFileReader from 'promise-file-reader';
@@ -54,6 +55,7 @@ class EPub extends EventEmitter {
   private guide: any;
   private spine: any;
   private zip: ZipFile | undefined;
+  private jsZip: JSZip;
   private xml2jsOptions: Options;
 
   constructor(private file: File, imageroot?: string, linkroot?: string) {

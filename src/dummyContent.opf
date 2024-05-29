@@ -1,0 +1,307 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<package xmlns:opf="http://www.idpf.org/2007/opf" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.idpf.org/2007/opf" version="3.0" unique-identifier="id">
+  <metadata>
+    <dc:rights>Public domain in the USA.</dc:rights>
+    <dc:identifier id="id">http://www.gutenberg.org/394</dc:identifier>
+    <dc:creator id="author_0">Elizabeth Cleghorn Gaskell</dc:creator>
+    <meta property="file-as" refines="#author_0">Gaskell, Elizabeth Cleghorn</meta>
+    <meta property="role" refines="#author_0" scheme="marc:relators">aut</meta>
+    <dc:contributor id="author_1">C. E. Brock</dc:contributor>
+    <meta property="file-as" refines="#author_1">Brock, C. E. (Charles Edmund)</meta>
+    <meta property="role" refines="#author_1" scheme="marc:relators">ill</meta>
+    <dc:title>Cranford</dc:title>
+    <dc:language>en</dc:language>
+    <dc:subject>England -- Fiction</dc:subject>
+    <dc:subject>Sisters -- Fiction</dc:subject>
+    <dc:subject>Pastoral fiction</dc:subject>
+    <dc:subject>Villages -- Fiction</dc:subject>
+    <dc:subject>Older women -- Fiction</dc:subject>
+    <dc:subject>Female friendship -- Fiction</dc:subject>
+    <dc:date>1996-01-01</dc:date>
+    <meta property="dcterms:modified">2023-06-01T09:24:00Z</meta>
+    <dc:source>https://www.gutenberg.org/files/394/394-h/394-h.htm</dc:source>
+    <meta name="cover" content="id-4342825810081545813"/>
+  </metadata>
+  <manifest>
+    <!--Image: 580 x 900 size=114257 -->
+    <item href="3645149429256474691_cover.jpg" id="id-4342825810081545813" media-type="image/jpeg" properties="cover-image"/>
+    <!--Image: 784 x 1293 size=244129 -->
+    <item href="3645149429256474691_fpb.jpg" id="id-9154754837600503773" media-type="image/jpeg"/>
+    <!--Image: 294 x 485 size=17120 -->
+    <item href="3645149429256474691_fps.jpg" id="id-1925861196799756439" media-type="image/jpeg"/>
+    <!--Image: 529 x 534 size=66972 -->
+    <item href="3645149429256474691_tpb.jpg" id="id-8617026159820832037" media-type="image/jpeg"/>
+    <!--Image: 198 x 200 size=12339 -->
+    <item href="3645149429256474691_tps.jpg" id="id-485776677910541774" media-type="image/jpeg"/>
+    <!--Image: 207 x 136 size=7079 -->
+    <item href="3645149429256474691_tp2b.jpg" id="id-7288080234604223483" media-type="image/jpeg"/>
+    <!--Image: 68 x 45 size=1722 -->
+    <item href="3645149429256474691_tp2s.jpg" id="id-7353086234629628715" media-type="image/jpeg"/>
+    <!--Image: 1056 x 1683 size=542617 -->
+    <item href="3645149429256474691_p3b.jpg" id="id-4358299445813603186" media-type="image/jpeg"/>
+    <!--Image: 317 x 505 size=39590 -->
+    <item href="3645149429256474691_p3s.jpg" id="id-8133262927109263592" media-type="image/jpeg"/>
+    <!--Image: 1077 x 1707 size=548358 -->
+    <item href="3645149429256474691_p8b.jpg" id="id-9135164285027490527" media-type="image/jpeg"/>
+    <!--Image: 323 x 512 size=36903 -->
+    <item href="3645149429256474691_p8s.jpg" id="id-77552379610945386" media-type="image/jpeg"/>
+    <!--Image: 1087 x 1790 size=571449 -->
+    <item href="3645149429256474691_p14b.jpg" id="id-652511898266210754" media-type="image/jpeg"/>
+    <!--Image: 163 x 268 size=12098 -->
+    <item href="3645149429256474691_p14s.jpg" id="id-2709435065432360494" media-type="image/jpeg"/>
+    <!--Image: 834 x 1381 size=325276 -->
+    <item href="3645149429256474691_p24b.jpg" id="id-2973398976680748584" media-type="image/jpeg"/>
+    <!--Image: 313 x 518 size=38785 -->
+    <item href="3645149429256474691_p24s.jpg" id="id-1160444417226924259" media-type="image/jpeg"/>
+    <!--Image: 835 x 1334 size=265214 -->
+    <item href="3645149429256474691_p33b.jpg" id="id-7148748116710578678" media-type="image/jpeg"/>
+    <!--Image: 313 x 500 size=32650 -->
+    <item href="3645149429256474691_p33s.jpg" id="id-5342747142605696177" media-type="image/jpeg"/>
+    <!--Image: 893 x 1363 size=347508 -->
+    <item href="3645149429256474691_p48b.jpg" id="id-7618428636200939959" media-type="image/jpeg"/>
+    <!--Image: 335 x 511 size=38911 -->
+    <item href="3645149429256474691_p48s.jpg" id="id-2949849516670444281" media-type="image/jpeg"/>
+    <!--Image: 875 x 1414 size=323181 -->
+    <item href="3645149429256474691_p54b.jpg" id="id-3783867261297608185" media-type="image/jpeg"/>
+    <!--Image: 328 x 530 size=37379 -->
+    <item href="3645149429256474691_p54s.jpg" id="id-5213833772665105021" media-type="image/jpeg"/>
+    <!--Image: 848 x 1298 size=249264 -->
+    <item href="3645149429256474691_p74b.jpg" id="id-5217605684387284466" media-type="image/jpeg"/>
+    <!--Image: 318 x 487 size=31906 -->
+    <item href="3645149429256474691_p74s.jpg" id="id-5847274940361803332" media-type="image/jpeg"/>
+    <!--Image: 818 x 1346 size=288442 -->
+    <item href="3645149429256474691_p82b.jpg" id="id-3629306434231600807" media-type="image/jpeg"/>
+    <!--Image: 307 x 505 size=31280 -->
+    <item href="3645149429256474691_p82s.jpg" id="id-6160541869706039149" media-type="image/jpeg"/>
+    <!--Image: 835 x 1374 size=336390 -->
+    <item href="3645149429256474691_p106b.jpg" id="id-3305598800300140621" media-type="image/jpeg"/>
+    <!--Image: 313 x 515 size=39562 -->
+    <item href="3645149429256474691_p106s.jpg" id="id-1727991517839486152" media-type="image/jpeg"/>
+    <!--Image: 834 x 1323 size=197818 -->
+    <item href="3645149429256474691_p117b.jpg" id="id-5471608877771295843" media-type="image/jpeg"/>
+    <!--Image: 313 x 496 size=23526 -->
+    <item href="3645149429256474691_p117s.jpg" id="id-2005145017879255806" media-type="image/jpeg"/>
+    <!--Image: 878 x 1341 size=298473 -->
+    <item href="3645149429256474691_p124b.jpg" id="id-3065303309058074852" media-type="image/jpeg"/>
+    <!--Image: 329 x 503 size=34902 -->
+    <item href="3645149429256474691_p124s.jpg" id="id-5595274190594972276" media-type="image/jpeg"/>
+    <!--Image: 802 x 1292 size=302253 -->
+    <item href="3645149429256474691_p140b.jpg" id="id-349357362133120577" media-type="image/jpeg"/>
+    <!--Image: 301 x 485 size=34449 -->
+    <item href="3645149429256474691_p140s.jpg" id="id-8600917539154908941" media-type="image/jpeg"/>
+    <!--Image: 763 x 1274 size=286189 -->
+    <item href="3645149429256474691_p148b.jpg" id="id-6050346944934675072" media-type="image/jpeg"/>
+    <!--Image: 286 x 478 size=34181 -->
+    <item href="3645149429256474691_p148s.jpg" id="id-6478983528504787522" media-type="image/jpeg"/>
+    <!--Image: 883 x 1306 size=257242 -->
+    <item href="3645149429256474691_p157b.jpg" id="id-3504805521656460047" media-type="image/jpeg"/>
+    <!--Image: 331 x 490 size=35702 -->
+    <item href="3645149429256474691_p157s.jpg" id="id-4903523567995736727" media-type="image/jpeg"/>
+    <!--Image: 909 x 1317 size=279527 -->
+    <item href="3645149429256474691_p170b.jpg" id="id-4068954228675346926" media-type="image/jpeg"/>
+    <!--Image: 341 x 494 size=34086 -->
+    <item href="3645149429256474691_p170s.jpg" id="id-3071318942405394311" media-type="image/jpeg"/>
+    <!--Image: 896 x 1275 size=243529 -->
+    <item href="3645149429256474691_p179b.jpg" id="id-1697476948957045914" media-type="image/jpeg"/>
+    <!--Image: 336 x 478 size=31175 -->
+    <item href="3645149429256474691_p179s.jpg" id="id-8328898321967359229" media-type="image/jpeg"/>
+    <!--Image: 855 x 1330 size=278056 -->
+    <item href="3645149429256474691_p190b.jpg" id="id-8419122801695685536" media-type="image/jpeg"/>
+    <!--Image: 321 x 499 size=33176 -->
+    <item href="3645149429256474691_p190s.jpg" id="id-8305008910024836376" media-type="image/jpeg"/>
+    <!--Image: 880 x 1277 size=286377 -->
+    <item href="3645149429256474691_p198b.jpg" id="id-2348919471920135266" media-type="image/jpeg"/>
+    <!--Image: 327 x 480 size=34246 -->
+    <item href="3645149429256474691_p198s.jpg" id="id-4196757270271312273" media-type="image/jpeg"/>
+    <!--Image: 790 x 1263 size=245490 -->
+    <item href="3645149429256474691_p213b.jpg" id="id-1693840842004901174" media-type="image/jpeg"/>
+    <!--Image: 296 x 474 size=29222 -->
+    <item href="3645149429256474691_p213s.jpg" id="id-1379758817413639827" media-type="image/jpeg"/>
+    <!--Image: 814 x 1267 size=253306 -->
+    <item href="3645149429256474691_p220b.jpg" id="id-4239204534778859239" media-type="image/jpeg"/>
+    <!--Image: 305 x 475 size=29868 -->
+    <item href="3645149429256474691_p220s.jpg" id="id-3144198167373480419" media-type="image/jpeg"/>
+    <!--Image: 810 x 1312 size=275208 -->
+    <item href="3645149429256474691_p231b.jpg" id="id-5615337655649623729" media-type="image/jpeg"/>
+    <!--Image: 304 x 492 size=32213 -->
+    <item href="3645149429256474691_p231s.jpg" id="id-91234984421515911" media-type="image/jpeg"/>
+    <!--Image: 947 x 1278 size=262997 -->
+    <item href="3645149429256474691_p234b.jpg" id="id-4373885055838884288" media-type="image/jpeg"/>
+    <!--Image: 355 x 480 size=32232 -->
+    <item href="3645149429256474691_p234s.jpg" id="id-4811331347029417011" media-type="image/jpeg"/>
+    <item href="pgepub.css" id="item1" media-type="text/css"/>
+    <item href="0.css" id="item2" media-type="text/css"/>
+    <item href="1.css" id="item3" media-type="text/css"/>
+    <item href="2.css" id="item4" media-type="text/css"/>
+    <item href="3.css" id="item5" media-type="text/css"/>
+    <item href="4.css" id="item6" media-type="text/css"/>
+    <item href="5.css" id="item7" media-type="text/css"/>
+    <item href="6.css" id="item8" media-type="text/css"/>
+    <item href="7.css" id="item9" media-type="text/css"/>
+    <item href="8.css" id="item10" media-type="text/css"/>
+    <item href="9.css" id="item11" media-type="text/css"/>
+    <item href="10.css" id="item12" media-type="text/css"/>
+    <item href="11.css" id="item13" media-type="text/css"/>
+    <item href="12.css" id="item14" media-type="text/css"/>
+    <item href="13.css" id="item15" media-type="text/css"/>
+    <item href="14.css" id="item16" media-type="text/css"/>
+    <item href="15.css" id="item17" media-type="text/css"/>
+    <item href="16.css" id="item18" media-type="text/css"/>
+    <item href="17.css" id="item19" media-type="text/css"/>
+    <item href="18.css" id="item20" media-type="text/css"/>
+    <item href="19.css" id="item21" media-type="text/css"/>
+    <item href="20.css" id="item22" media-type="text/css"/>
+    <item href="21.css" id="item23" media-type="text/css"/>
+    <item href="22.css" id="item24" media-type="text/css"/>
+    <item href="23.css" id="item25" media-type="text/css"/>
+    <item href="24.css" id="item26" media-type="text/css"/>
+    <item href="25.css" id="item27" media-type="text/css"/>
+    <item href="26.css" id="item28" media-type="text/css"/>
+    <item href="27.css" id="item29" media-type="text/css"/>
+    <!--Chunk: size=3232 Split on div.chapter-->
+    <item href="1037185563159831936_394-h-0.htm.xhtml" id="pg-header" media-type="application/xhtml+xml"/>
+    <!--Chunk: size=2658 Split on div.chapter-->
+    <item href="1037185563159831936_394-h-1.htm.xhtml" id="item30" media-type="application/xhtml+xml"/>
+    <!--Chunk: size=4349 Split on div.chapter-->
+    <item href="1037185563159831936_394-h-2.htm.xhtml" id="item31" media-type="application/xhtml+xml"/>
+    <!--Chunk: size=24056 Split on div.chapter-->
+    <item href="1037185563159831936_394-h-3.htm.xhtml" id="item32" media-type="application/xhtml+xml"/>
+    <!--Chunk: size=32577 Split on div.chapter-->
+    <item href="1037185563159831936_394-h-4.htm.xhtml" id="item33" media-type="application/xhtml+xml"/>
+    <!--Chunk: size=19915 Split on div.chapter-->
+    <item href="1037185563159831936_394-h-5.htm.xhtml" id="item34" media-type="application/xhtml+xml"/>
+    <!--Chunk: size=24361 Split on div.chapter-->
+    <item href="1037185563159831936_394-h-6.htm.xhtml" id="item35" media-type="application/xhtml+xml"/>
+    <!--Chunk: size=23832 Split on div.chapter-->
+    <item href="1037185563159831936_394-h-7.htm.xhtml" id="item36" media-type="application/xhtml+xml"/>
+    <!--Chunk: size=25878 Split on div.chapter-->
+    <item href="1037185563159831936_394-h-8.htm.xhtml" id="item37" media-type="application/xhtml+xml"/>
+    <!--Chunk: size=22766 Split on div.chapter-->
+    <item href="1037185563159831936_394-h-9.htm.xhtml" id="item38" media-type="application/xhtml+xml"/>
+    <!--Chunk: size=29232 Split on div.chapter-->
+    <item href="1037185563159831936_394-h-10.htm.xhtml" id="item39" media-type="application/xhtml+xml"/>
+    <!--Chunk: size=21614 Split on div.chapter-->
+    <item href="1037185563159831936_394-h-11.htm.xhtml" id="item40" media-type="application/xhtml+xml"/>
+    <!--Chunk: size=31441 Split on div.chapter-->
+    <item href="1037185563159831936_394-h-12.htm.xhtml" id="item41" media-type="application/xhtml+xml"/>
+    <!--Chunk: size=25280 Split on div.chapter-->
+    <item href="1037185563159831936_394-h-13.htm.xhtml" id="item42" media-type="application/xhtml+xml"/>
+    <!--Chunk: size=18236 Split on div.chapter-->
+    <item href="1037185563159831936_394-h-14.htm.xhtml" id="item43" media-type="application/xhtml+xml"/>
+    <!--Chunk: size=25042 Split on div.chapter-->
+    <item href="1037185563159831936_394-h-15.htm.xhtml" id="item44" media-type="application/xhtml+xml"/>
+    <!--Chunk: size=39041 Split on div.chapter-->
+    <item href="1037185563159831936_394-h-16.htm.xhtml" id="item45" media-type="application/xhtml+xml"/>
+    <!--Chunk: size=28003 Split on div.chapter-->
+    <item href="1037185563159831936_394-h-17.htm.xhtml" id="item46" media-type="application/xhtml+xml"/>
+    <!--Chunk: size=16825 Split on section-->
+    <item href="1037185563159831936_394-h-18.htm.xhtml" id="item47" media-type="application/xhtml+xml"/>
+    <!--Chunk: size=19788-->
+    <item href="1037185563159831936_394-h-19.htm.xhtml" id="pg-footer" media-type="application/xhtml+xml"/>
+    <!--Chunk: size=375-->
+    <item href="3645149429256474691_fpb.jpg.id-9154754837600503773.wrap-0.html.xhtml" id="item48" media-type="application/xhtml+xml"/>
+    <!--Chunk: size=375-->
+    <item href="3645149429256474691_tpb.jpg.id-8617026159820832037.wrap-0.html.xhtml" id="item49" media-type="application/xhtml+xml"/>
+    <!--Chunk: size=376-->
+    <item href="3645149429256474691_tp2b.jpg.id-7288080234604223483.wrap-0.html.xhtml" id="item50" media-type="application/xhtml+xml"/>
+    <!--Chunk: size=375-->
+    <item href="3645149429256474691_p3b.jpg.id-4358299445813603186.wrap-0.html.xhtml" id="item51" media-type="application/xhtml+xml"/>
+    <!--Chunk: size=375-->
+    <item href="3645149429256474691_p8b.jpg.id-9135164285027490527.wrap-0.html.xhtml" id="item52" media-type="application/xhtml+xml"/>
+    <!--Chunk: size=375-->
+    <item href="3645149429256474691_p14b.jpg.id-652511898266210754.wrap-0.html.xhtml" id="item53" media-type="application/xhtml+xml"/>
+    <!--Chunk: size=376-->
+    <item href="3645149429256474691_p24b.jpg.id-2973398976680748584.wrap-0.html.xhtml" id="item54" media-type="application/xhtml+xml"/>
+    <!--Chunk: size=376-->
+    <item href="3645149429256474691_p33b.jpg.id-7148748116710578678.wrap-0.html.xhtml" id="item55" media-type="application/xhtml+xml"/>
+    <!--Chunk: size=376-->
+    <item href="3645149429256474691_p48b.jpg.id-7618428636200939959.wrap-0.html.xhtml" id="item56" media-type="application/xhtml+xml"/>
+    <!--Chunk: size=376-->
+    <item href="3645149429256474691_p54b.jpg.id-3783867261297608185.wrap-0.html.xhtml" id="item57" media-type="application/xhtml+xml"/>
+    <!--Chunk: size=376-->
+    <item href="3645149429256474691_p74b.jpg.id-5217605684387284466.wrap-0.html.xhtml" id="item58" media-type="application/xhtml+xml"/>
+    <!--Chunk: size=376-->
+    <item href="3645149429256474691_p82b.jpg.id-3629306434231600807.wrap-0.html.xhtml" id="item59" media-type="application/xhtml+xml"/>
+    <!--Chunk: size=377-->
+    <item href="3645149429256474691_p106b.jpg.id-3305598800300140621.wrap-0.html.xhtml" id="item60" media-type="application/xhtml+xml"/>
+    <!--Chunk: size=377-->
+    <item href="3645149429256474691_p117b.jpg.id-5471608877771295843.wrap-0.html.xhtml" id="item61" media-type="application/xhtml+xml"/>
+    <!--Chunk: size=377-->
+    <item href="3645149429256474691_p124b.jpg.id-3065303309058074852.wrap-0.html.xhtml" id="item62" media-type="application/xhtml+xml"/>
+    <!--Chunk: size=376-->
+    <item href="3645149429256474691_p140b.jpg.id-349357362133120577.wrap-0.html.xhtml" id="item63" media-type="application/xhtml+xml"/>
+    <!--Chunk: size=377-->
+    <item href="3645149429256474691_p148b.jpg.id-6050346944934675072.wrap-0.html.xhtml" id="item64" media-type="application/xhtml+xml"/>
+    <!--Chunk: size=377-->
+    <item href="3645149429256474691_p157b.jpg.id-3504805521656460047.wrap-0.html.xhtml" id="item65" media-type="application/xhtml+xml"/>
+    <!--Chunk: size=377-->
+    <item href="3645149429256474691_p170b.jpg.id-4068954228675346926.wrap-0.html.xhtml" id="item66" media-type="application/xhtml+xml"/>
+    <!--Chunk: size=377-->
+    <item href="3645149429256474691_p179b.jpg.id-1697476948957045914.wrap-0.html.xhtml" id="item67" media-type="application/xhtml+xml"/>
+    <!--Chunk: size=377-->
+    <item href="3645149429256474691_p190b.jpg.id-8419122801695685536.wrap-0.html.xhtml" id="item68" media-type="application/xhtml+xml"/>
+    <!--Chunk: size=377-->
+    <item href="3645149429256474691_p198b.jpg.id-2348919471920135266.wrap-0.html.xhtml" id="item69" media-type="application/xhtml+xml"/>
+    <!--Chunk: size=377-->
+    <item href="3645149429256474691_p213b.jpg.id-1693840842004901174.wrap-0.html.xhtml" id="item70" media-type="application/xhtml+xml"/>
+    <!--Chunk: size=377-->
+    <item href="3645149429256474691_p220b.jpg.id-4239204534778859239.wrap-0.html.xhtml" id="item71" media-type="application/xhtml+xml"/>
+    <!--Chunk: size=377-->
+    <item href="3645149429256474691_p231b.jpg.id-5615337655649623729.wrap-0.html.xhtml" id="item72" media-type="application/xhtml+xml"/>
+    <!--Chunk: size=377-->
+    <item href="3645149429256474691_p234b.jpg.id-4373885055838884288.wrap-0.html.xhtml" id="item73" media-type="application/xhtml+xml"/>
+    <item href="toc.xhtml" id="ncx" media-type="application/xhtml+xml" properties="nav"/>
+    <item href="toc.ncx" id="ncx2" media-type="application/x-dtbncx+xml"/>
+    <item href="wrap0000.xhtml" id="coverpage-wrapper" media-type="application/xhtml+xml" properties="svg"/>
+  </manifest>
+  <spine toc="ncx2">
+    <itemref idref="coverpage-wrapper"/>
+    <itemref idref="pg-header"/>
+    <itemref idref="item30"/>
+    <itemref idref="item31"/>
+    <itemref idref="item32"/>
+    <itemref idref="item33"/>
+    <itemref idref="item34"/>
+    <itemref idref="item35"/>
+    <itemref idref="item36"/>
+    <itemref idref="item37"/>
+    <itemref idref="item38"/>
+    <itemref idref="item39"/>
+    <itemref idref="item40"/>
+    <itemref idref="item41"/>
+    <itemref idref="item42"/>
+    <itemref idref="item43"/>
+    <itemref idref="item44"/>
+    <itemref idref="item45"/>
+    <itemref idref="item46"/>
+    <itemref idref="item47"/>
+    <itemref idref="pg-footer"/>
+    <itemref idref="item48"/>
+    <itemref idref="item49"/>
+    <itemref idref="item50"/>
+    <itemref idref="item51"/>
+    <itemref idref="item52"/>
+    <itemref idref="item53"/>
+    <itemref idref="item54"/>
+    <itemref idref="item55"/>
+    <itemref idref="item56"/>
+    <itemref idref="item57"/>
+    <itemref idref="item58"/>
+    <itemref idref="item59"/>
+    <itemref idref="item60"/>
+    <itemref idref="item61"/>
+    <itemref idref="item62"/>
+    <itemref idref="item63"/>
+    <itemref idref="item64"/>
+    <itemref idref="item65"/>
+    <itemref idref="item66"/>
+    <itemref idref="item67"/>
+    <itemref idref="item68"/>
+    <itemref idref="item69"/>
+    <itemref idref="item70"/>
+    <itemref idref="item71"/>
+    <itemref idref="item72"/>
+    <itemref idref="item73"/>
+  </spine>
+</package>

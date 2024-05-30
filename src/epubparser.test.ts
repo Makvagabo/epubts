@@ -10,7 +10,7 @@ async function parse(content: string): Promise<any> {
 describe('EPubParser', () => {
   it('parses content file to EPub', async () => {
     const dummyContentFileContent =  readFileSync('./src/dummyContent.opf').toString();
-    await EPubParser.parseContentFileToEPub(dummyContentFileContent, null);
+    await EPubParser.parseContentFileToEPub(dummyContentFileContent, null, '');
   });
 
   describe('getTagNames', () => {
@@ -144,4 +144,32 @@ describe('EPubParser', () => {
       expect(metadata).toEqual({ISBN: '978-3-16-148410-1', UUID: '978-3-16-148410-0'});
     });
   });
+
+  describe('parseManifestNode', () => {
+    const dummyPath = 'OEBPS'
+
+    it('parses manifest items with id to list', async () => {
+      const parsedXml = await parse('<manifest><item id="01"/><item id="02"/></manifest>');
+      const manifest = EPubParser.parseManifestNode(parsedXml, dummyPath);
+      expect(manifest).toEqual([{id: '01'}, {id: '02'}]);
+    });
+
+    it('parses manifest items with href', async () => {
+      const parsedXml = await parse('<manifest><item id="01"/><item id="02" href="OEBPS/test.css"/></manifest>');
+      const manifest = EPubParser.parseManifestNode(parsedXml, dummyPath);
+      expect(manifest).toEqual([{id: '01'}, {id: '02',href: 'OEBPS/test.css'}]);
+    });
+
+    it('parses manifest items with href and content path', async () => {
+      const parsedXml = await parse('<manifest><item id="01"/><item id="02" href="test.css"/></manifest>');
+      const manifest = EPubParser.parseManifestNode(parsedXml, dummyPath);
+      expect(manifest).toEqual([{id: '01'}, {id: '02',href: 'OEBPS/test.css'}]);
+    });
+
+    it('parses manifest items with media-type', async () => {
+      const parsedXml = await parse('<manifest><item id="01"/><item id="02" media-type="text/plain"/></manifest>');
+      const manifest = EPubParser.parseManifestNode(parsedXml, dummyPath);
+      expect(manifest).toEqual([{id: '01'}, {id: '02', mediaType: 'text/plain'}]);
+    });
+  })
 });

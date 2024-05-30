@@ -12,13 +12,18 @@ export class Epubfactory {
       throw new Error('Unsupported mime type');
     }
 
-    const contentFileContent = await this.getContentFileContent(zip);
-    return EPubParser.parseContentFileToEPub(contentFileContent, zip);
+    const contentFileFilename = await this.getContentFileFilename(zip);
+    const contentFileContent = await this.getContentFileContent(zip, contentFileFilename);
+    const contentPath = this.getBasePath(contentFileFilename);
+    return EPubParser.parseContentFileToEPub(contentFileContent, zip, contentPath);
   }
 
-  private static async getContentFileContent(zip: JSZip): Promise<string> {
+  private static async getContentFileFilename(zip: JSZip): Promise<string> {
     const containerFileContent = await zip.file('META-INF/container.xml').async('string');
-    const contentFileFilename = await EPubParser.parseRootFileForContentFilename(containerFileContent);
+    return await EPubParser.parseRootFileForContentFilename(containerFileContent);
+  }
+
+  private static async getContentFileContent(zip: JSZip, contentFileFilename: string): Promise<string> {
     return await zip.file(contentFileFilename).async('string');
   }
 
@@ -29,5 +34,11 @@ export class Epubfactory {
     } catch(e) {
       throw new Error('No mimetype file in archive');
     }
+  }
+
+  private static getBasePath(path: string): string {
+    const pathParts = path.split('/');
+    pathParts.pop();
+    return pathParts.join('/');
   }
 }

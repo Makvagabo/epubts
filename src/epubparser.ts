@@ -1,4 +1,4 @@
-import {EPub, Metadata} from 'epubnew';
+import {EPub, ManifestItem, Metadata} from 'epubnew';
 import {defaults as xml2jsDefaults, Parser} from 'xml2js';
 import JSZip from 'jszip';
 
@@ -8,11 +8,12 @@ class EPubParser {
   public constructor() {
     this.parser = new Parser(xml2jsDefaults['0.1']);
   }
-  public async parseContentFileToEPub(contentFileContent:string, zip: JSZip): Promise<EPub> {
+  public async parseContentFileToEPub(contentFileContent:string, zip: JSZip, contentPath: string): Promise<EPub> {
     const xml = await this.parser.parseStringPromise(contentFileContent);
 
     const version = xml['@'].version || '2.0';
-    const metadata: Metadata = {};
+    let metadata: Metadata = {};
+    let manifest: ManifestItem[] = [];
 
 
     const tags = this.getTagNames(xml);
@@ -21,10 +22,10 @@ class EPubParser {
 
       switch (tag) {
         case 'metadata':
-          this.parseMetadataNode(xml[tag]);
+          metadata = this.parseMetadataNode(xml[tag]);
           break;
         case 'manifest':
-          // this.parseManifest(xml[keys[i]]);
+          manifest = this.parseManifestNode(xml[tag], contentPath);
           break;
         case 'spine':
           // this.parseSpine(xml[keys[i]]);
@@ -44,7 +45,36 @@ class EPubParser {
     return new EPub(zip, version, metadata);
   }
 
-  public parseMetadataNode(metadataNode: any): any {
+  public parseManifestNode(manifestNode: any, contentPath: string): ManifestItem[] {
+    if (Array.isArray(manifestNode.item)) {
+      return manifestNode.item.map(itemNode => {
+        const attributes = itemNode['@'];
+
+        const manifestItem: ManifestItem = {
+          id: attributes.id
+        };
+
+        if (attributes.href) {
+          if (!attributes.href.startsWith(contentPath)) {
+            manifestItem.href = [contentPath, attributes.href].join("/");
+          } else {
+            manifestItem.href = attributes.href;
+          }
+        }
+
+        if (attributes['media-type']) {
+          manifestItem.mediaType = attributes['media-type'];
+        }
+
+        return manifestItem;
+
+      });
+    }
+
+    return [];
+  }
+
+  public parseMetadataNode(metadataNode: any): Metadata {
     const metadata: any = {};
 
     const tags = this.getTagNames(metadataNode);
@@ -78,6 +108,8 @@ class EPubParser {
     }
 
     this.parseMetaNode(metadataNode, metadata);
+
+    return metadata;
   };
 
   public parseMetaNode(metadataNode: any, metadata: Metadata) {

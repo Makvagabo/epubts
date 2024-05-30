@@ -15,6 +15,12 @@ export interface Metadata {
   creatorFileAs?: string;
 }
 
+export interface ManifestItem {
+  id: string;
+  href?: string;
+  mediaType?: string;
+}
+
 export class EPub {
 
   constructor(private zip: JSZip, public version: string, public metadata: Metadata) {

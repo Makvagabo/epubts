@@ -1,4 +1,4 @@
-import {EPub, ManifestItem, Metadata} from 'epubnew';
+import {EPub, Manifest, ManifestItem, Metadata, Spine} from 'epubnew';
 import {defaults as xml2jsDefaults, Parser} from 'xml2js';
 import JSZip from 'jszip';
 
@@ -13,13 +13,13 @@ class EPubParser {
 
     const version = xml['@'].version || '2.0';
     let metadata: Metadata = {};
-    let manifest: ManifestItem[] = [];
+    let manifest: Manifest = {};
+    let spine: Spine = { contents: [] };
+    let flow: ManifestItem[] = [];
 
 
     const tags = this.getTagNames(xml);
     for (const tag of tags) {
-      // console.log(tag);
-
       switch (tag) {
         case 'metadata':
           metadata = this.parseMetadataNode(xml[tag]);
@@ -28,7 +28,8 @@ class EPubParser {
           manifest = this.parseManifestNode(xml[tag], contentPath);
           break;
         case 'spine':
-          // this.parseSpine(xml[keys[i]]);
+          spine = this.parseSpineNode(xml[tag], manifest);
+          flow = spine.contents;
           break;
         case 'guide':
           // this.parseGuide(xml[keys[i]]);
@@ -45,14 +46,14 @@ class EPubParser {
     return new EPub(zip, version, metadata);
   }
 
-  public parseManifestNode(manifestNode: any, contentPath: string): ManifestItem[] {
+  public parseManifestNode(manifestNode: any, contentPath: string): Manifest {
+    const manifest: Manifest = {};
+
     if (Array.isArray(manifestNode.item)) {
-      return manifestNode.item.map(itemNode => {
+     for(const itemNode of manifestNode.item) {
         const attributes = itemNode['@'];
 
-        const manifestItem: ManifestItem = {
-          id: attributes.id
-        };
+        const manifestItem: ManifestItem = {};
 
         if (attributes.href) {
           if (!attributes.href.startsWith(contentPath)) {
@@ -66,12 +67,37 @@ class EPubParser {
           manifestItem.mediaType = attributes['media-type'];
         }
 
-        return manifestItem;
-
-      });
+        manifest[attributes.id] = manifestItem;
+      }
     }
 
-    return [];
+    return manifest;
+  }
+
+  public parseSpineNode(spineNode: any, manifest: Manifest) {
+    const spine: Spine = { contents: [] };
+
+    if (spineNode['@'] && spineNode['@'].toc) {
+      spine.toc = manifest[spineNode['@'].toc] || undefined;
+    }
+
+    if (spineNode.itemref) {
+      if(!Array.isArray(spineNode.itemref)){
+        spineNode.itemref = [spineNode.itemref];
+      }
+
+      for (const itemref of spineNode.itemref) {
+        if (itemref['@']) {
+          const element = manifest[itemref['@'].idref]
+
+          if (!!element) {
+            spine.contents.push(element);
+          }
+        }
+      }
+    }
+
+    return spine;
   }
 
   public parseMetadataNode(metadataNode: any): Metadata {

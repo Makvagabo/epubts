@@ -16,9 +16,17 @@ export interface Metadata {
 }
 
 export interface ManifestItem {
-  id: string;
   href?: string;
   mediaType?: string;
+}
+
+export interface Manifest {
+  [key: string]: ManifestItem;
+}
+
+export interface Spine {
+  toc?: ManifestItem;
+  contents: ManifestItem[];
 }
 
 export class EPub {

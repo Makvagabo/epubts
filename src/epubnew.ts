@@ -29,9 +29,25 @@ export interface Spine {
   contents: ManifestItem[];
 }
 
+export interface GuideItem {
+  href: string;
+}
+
+export type Guide = GuideItem[];
+
+export interface NavElement {
+  level: number;
+  order: number;
+  title: string;
+  href: string;
+  id: string;
+}
+
+export type TableOfContents = NavElement[];
+
 export class EPub {
 
-  constructor(private zip: JSZip, public version: string, public metadata: Metadata) {
+  constructor(private zip: JSZip, public version: string, public metadata: Metadata, public toc: TableOfContents) {
   }
 
   // public async getChapter(id: string): Promise<string> {}

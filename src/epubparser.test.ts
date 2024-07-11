@@ -207,4 +207,129 @@ describe('EPubParser', () => {
       );
     });
   });
+
+  describe('parseTOC', () => {
+    const dummySingleNodeToc = `
+      <?xml version='1.0' encoding='UTF-8'?>
+      <ncx xmlns="http://www.daisy.org/z3986/2005/ncx/" version="2005-1" xml:lang="en">
+        <navMap>
+          <navPoint id="np-1" playOrder="1">
+            <navLabel>
+              <text>The Project Gutenberg eBook of Cranford</text>
+            </navLabel>
+            <content src="1037185563159831936_394-h-0.htm.xhtml#pg-header-heading"/>
+          </navPoint>
+        </navMap> 
+      </ncx>
+      `
+
+    const dummyMultiNodeToc = `
+      <?xml version='1.0' encoding='UTF-8'?>
+      <ncx xmlns="http://www.daisy.org/z3986/2005/ncx/" version="2005-1" xml:lang="en">
+        <navMap>
+          <navPoint id="np-1" playOrder="1">
+            <navLabel>
+              <text>The Project Gutenberg eBook of Cranford</text>
+            </navLabel>
+            <content src="1037185563159831936_394-h-0.htm.xhtml#pg-header-heading"/>
+          </navPoint>
+          <navPoint id="np-2" playOrder="12">
+            <navLabel>
+              <text>CRANFORD</text>
+            </navLabel>
+            <content src="1037185563159831936_394-h-0.htm.xhtml#pgepubid00000"/>
+          </navPoint>
+        </navMap> 
+      </ncx>
+      `
+
+    const dummyRecursiveToc = `
+      <?xml version='1.0' encoding='UTF-8'?>
+      <ncx xmlns="http://www.daisy.org/z3986/2005/ncx/" version="2005-1" xml:lang="en">
+        <navMap>
+          <navPoint id="np-1" playOrder="1">
+            <navLabel>
+              <text>The Project Gutenberg eBook of Cranford</text>
+            </navLabel>
+            <content src="1037185563159831936_394-h-0.htm.xhtml#pg-header-heading"/>
+            <navPoint id="np-11" playOrder="3">
+              <navLabel>
+                <text>CHAPTER VII. VISITING</text>
+              </navLabel>
+              <content src="1037185563159831936_394-h-9.htm.xhtml#pgepubid00009"/>
+            </navPoint>
+          </navPoint>
+        </navMap> 
+      </ncx>
+      `
+
+    it('parses single navPoint with text and order', async () => {
+      const parsedXml = await parse(dummySingleNodeToc);
+      const toc = await EPubParser.parseTOC({}, parsedXml, 'OEBPS');
+      expect(toc).toEqual([{
+        level: 0,
+        order: 1,
+        title: 'The Project Gutenberg eBook of Cranford',
+        href: '1037185563159831936_394-h-0.htm.xhtml#pg-header-heading',
+        id: 'np-1'
+      }]);
+    });
+
+    it('parses single navPoint and fills with manifest info', async () => {
+      const parsedXml = await parse(dummySingleNodeToc);
+      const dummyManifest: Manifest = {
+        'np-1': {href: 'somedifferentlink.html'}
+      }
+      const toc = await EPubParser.parseTOC(dummyManifest, parsedXml, 'OEBPS');
+      expect(toc).toEqual([{
+        level: 0,
+        order: 1,
+        title: 'The Project Gutenberg eBook of Cranford',
+        href: 'somedifferentlink.html',
+        id: 'np-1'
+      }]);
+    });
+
+    it('parses multiple navPoints', async () => {
+      const parsedXml = await parse(dummyMultiNodeToc);
+      const toc = await EPubParser.parseTOC({}, parsedXml, 'OEBPS');
+      expect(toc).toEqual([
+        {
+          level: 0,
+          order: 1,
+          title: 'The Project Gutenberg eBook of Cranford',
+          href: '1037185563159831936_394-h-0.htm.xhtml#pg-header-heading',
+          id: 'np-1'
+        },
+        {
+          level: 0,
+          order: 12,
+          title: 'CRANFORD',
+          href: '1037185563159831936_394-h-0.htm.xhtml#pgepubid00000',
+          id: 'np-2'
+        }
+      ]);
+    });
+
+    it('parses recursive navPoints', async () => {
+      const parsedXml = await parse(dummyRecursiveToc);
+      const toc = await EPubParser.parseTOC({}, parsedXml, 'OEBPS');
+      expect(toc).toEqual([
+        {
+          level: 0,
+          order: 1,
+          title: 'The Project Gutenberg eBook of Cranford',
+          href: '1037185563159831936_394-h-0.htm.xhtml#pg-header-heading',
+          id: 'np-1'
+        },
+        {
+          level: 1,
+          order: 3,
+          title: 'CHAPTER VII. VISITING',
+          href: '1037185563159831936_394-h-9.htm.xhtml#pgepubid00009',
+          id: 'np-11'
+        }
+      ]);
+    });
+  });
 });

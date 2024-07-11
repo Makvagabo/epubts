@@ -1,4 +1,4 @@
-import {EPub, Manifest, ManifestItem, Metadata, Spine} from 'epubnew';
+import {EPub, Guide, GuideItem, Manifest, ManifestItem, Metadata, NavElement, Spine, TableOfContents} from 'epubnew';
 import {defaults as xml2jsDefaults, Parser} from 'xml2js';
 import JSZip from 'jszip';
 
@@ -16,6 +16,8 @@ class EPubParser {
     let manifest: Manifest = {};
     let spine: Spine = { contents: [] };
     let flow: ManifestItem[] = [];
+    let guide: Guide = [];
+    let toc: TableOfContents = [];
 
 
     const tags = this.getTagNames(xml);
@@ -31,19 +33,98 @@ class EPubParser {
           spine = this.parseSpineNode(xml[tag], manifest);
           flow = spine.contents;
           break;
-        case 'guide':
-          // this.parseGuide(xml[keys[i]]);
-          break;
       }
     }
 
-    // if (this.spine.toc) {
-    //   this.parseTOC();
-    // } else {
-    //   this.emit('end');
-    // }
+    if (spine.toc) {
+      const tocXml = await this.loadTocXml(zip, spine.toc.href);
+      toc = await this.parseTOC(manifest, tocXml, contentPath);
+    }
 
-    return new EPub(zip, version, metadata);
+    return new EPub(zip, version, metadata, toc);
+  }
+
+  public async parseTOC(manifest: Manifest, tocXml: any, contentPath: string): Promise<TableOfContents> {
+    const hrefsToManifestIds = this.getHrefToManifestIdMap(manifest);
+    return this.walkNavMap(tocXml.navMap.navPoint, [contentPath], hrefsToManifestIds, 0, manifest);
+  }
+
+  private async loadTocXml(zip: JSZip, filePath: string): Promise<any> {
+    const tocFileContent = await zip.file(filePath).async('string');
+    if (tocFileContent === null) {
+      throw new Error('Table of contents file not found in archive: ' + filePath);
+    }
+    return await this.parser.parseStringPromise(tocFileContent);
+  }
+
+  private walkNavMap(
+    branch: any, path: Array<string>, hrefToManifestIdMap: {[key: string]: string}, level: number, manifest: Manifest
+  ) {
+    // don't go too far
+    if (level > 7) {
+      return [];
+    }
+
+    let output: TableOfContents = [];
+
+    if (!Array.isArray(branch)) {
+      branch = [branch];
+    }
+
+    for (const navPoint of branch) {
+      if (navPoint.navLabel) {
+        let element = this.getNavElementFromNode(navPoint, level, path, hrefToManifestIdMap, manifest);
+
+        if (element.href) {
+          output.push(element);
+        }
+      }
+
+      if (navPoint.navPoint) {
+        output = output.concat(this.walkNavMap(navPoint.navPoint, path, hrefToManifestIdMap, level + 1, manifest));
+      }
+    }
+    return output;
+  };
+
+  private getNavElementFromNode(
+    navPoint: any, level: number, path: Array<string>, hrefToManifestIdMap: {[key: string]: string}, manifest: Manifest
+  ) {
+    const title = navPoint.navLabel && typeof navPoint.navLabel.text == 'string' ? navPoint.navLabel.text.trim() : ''
+    const order = Number(navPoint["@"] && navPoint["@"].playOrder || 0);
+    const href = navPoint.content && navPoint.content["@"] && typeof navPoint.content["@"].src == 'string' ? navPoint.content["@"].src.trim() : '';
+
+    let element: NavElement = {
+      level,
+      order,
+      title,
+      href: '',
+      id: ''
+    };
+
+    if (href) {
+      element.href = path.concat([href]).join("/");
+
+      if (hrefToManifestIdMap[element.href]) {
+        // link existing object
+        element.href = manifest[hrefToManifestIdMap[element.href]].href;
+        element.id = hrefToManifestIdMap[element.href];
+      } else {
+        // use new one
+        element.href = href;
+        element.id = (navPoint["@"] && navPoint["@"].id || "").trim();
+      }
+    }
+    return element;
+  }
+
+  private getHrefToManifestIdMap(manifest: Manifest): {[key: string]: string} {
+    const manifestIds = Object.keys(manifest);
+    const hrefsToManifestIds = {};
+    for (const manifestId of manifestIds) {
+      hrefsToManifestIds[manifest[manifestId].href] = manifestId;
+    }
+    return hrefsToManifestIds;
   }
 
   public parseManifestNode(manifestNode: any, contentPath: string): Manifest {

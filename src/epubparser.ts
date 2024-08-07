@@ -1,4 +1,4 @@
-import {EPub, Guide, GuideItem, Manifest, ManifestItem, Metadata, NavElement, Spine, TableOfContents} from 'epubnew';
+import {EPub, Guide, Manifest, ManifestItem, Metadata, NavElement, Spine, TableOfContents} from 'epubnew';
 import {defaults as xml2jsDefaults, Parser} from 'xml2js';
 import JSZip from 'jszip';
 
@@ -41,7 +41,7 @@ class EPubParser {
       toc = await this.parseTOC(manifest, tocXml, contentPath);
     }
 
-    return new EPub(zip, version, metadata, toc);
+    return new EPub(zip, version, metadata, manifest, toc, contentPath);
   }
 
   public async parseTOC(manifest: Manifest, tocXml: any, contentPath: string): Promise<TableOfContents> {

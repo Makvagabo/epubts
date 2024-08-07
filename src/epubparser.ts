@@ -1,4 +1,4 @@
-import {EPub, Guide, Manifest, ManifestItem, Metadata, NavElement, Spine, TableOfContents} from 'epubnew';
+import {EPub, Manifest, ManifestItem, Metadata, NavElement, Spine, TableOfContents} from 'epubnew';
 import {defaults as xml2jsDefaults, Parser} from 'xml2js';
 import JSZip from 'jszip';
 
@@ -15,8 +15,8 @@ class EPubParser {
     let metadata: Metadata = {};
     let manifest: Manifest = {};
     let spine: Spine = { contents: [] };
-    let flow: ManifestItem[] = [];
-    let guide: Guide = [];
+    let _flow: ManifestItem[] = [];
+    // const guide: Guide = [];
     let toc: TableOfContents = [];
 
 
@@ -31,7 +31,7 @@ class EPubParser {
           break;
         case 'spine':
           spine = this.parseSpineNode(xml[tag], manifest);
-          flow = spine.contents;
+          _flow = spine.contents;
           break;
       }
     }
@@ -73,7 +73,7 @@ class EPubParser {
 
     for (const navPoint of branch) {
       if (navPoint.navLabel) {
-        let element = this.getNavElementFromNode(navPoint, level, path, hrefToManifestIdMap, manifest);
+        const element = this.getNavElementFromNode(navPoint, level, path, hrefToManifestIdMap, manifest);
 
         if (element.href) {
           output.push(element);
@@ -94,7 +94,7 @@ class EPubParser {
     const order = Number(navPoint["@"] && navPoint["@"].playOrder || 0);
     const href = navPoint.content && navPoint.content["@"] && typeof navPoint.content["@"].src == 'string' ? navPoint.content["@"].src.trim() : '';
 
-    let element: NavElement = {
+    const element: NavElement = {
       level,
       order,
       title,
@@ -171,7 +171,7 @@ class EPubParser {
         if (itemref['@']) {
           const element = manifest[itemref['@'].idref]
 
-          if (!!element) {
+          if (element) {
             spine.contents.push(element);
           }
         }

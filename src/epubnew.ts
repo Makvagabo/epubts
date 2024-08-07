@@ -79,12 +79,12 @@ export class EPub {
   }
 
   private bringBackLinebreaks(rawChapter: string) {
-    return rawChapter.replace(/\u0000/g, "\n").trim();
+    return rawChapter.replace(/\u0000/g, "\n").trim(); // eslint-disable-line no-control-regex
   }
 
   private removeImages(rawChapter: string) {
     const keys = Object.keys(this.manifest);
-    return rawChapter.replace(/(\ssrc\s*=\s*["']?)([^"'\s>]*?)(["'\s>])/g, (match, offset, str, groups) => {
+    return rawChapter.replace(/(\ssrc\s*=\s*["']?)([^"'\s>]*?)(["'\s>])/g, (_match, offset, str, groups) => {
       const img = [this.contentPath, str].join("/").trim();
       let element;
 
@@ -107,7 +107,7 @@ export class EPub {
 
   private replaceLinks(rawChapter: string) {
     const keys = Object.keys(this.manifest);
-    return rawChapter.replace(/(\shref\s*=\s*["']?)([^"'\s>]*?)(["'\s>])/g, (match, offset, str, groups) => {
+    return rawChapter.replace(/(\shref\s*=\s*["']?)([^"'\s>]*?)(["'\s>])/g, (_match, offset, str, groups) => {
       const linkparts = str && str.split("#");
       let link = linkparts.length ? [this.contentPath, linkparts.shift() || ""].join("/").trim() : '';
       let element;
@@ -133,25 +133,25 @@ export class EPub {
   }
 
   private removeOnEventHandlers(rawChapter: string) {
-    return rawChapter.replace(/(\s)(on\w+)(\s*=\s*["']?[^"'\s>]*?["'\s>])/g, function (o, a, b, c) {
+    return rawChapter.replace(/(\s)(on\w+)(\s*=\s*["']?[^"'\s>]*?["'\s>])/g, function (_match, a, b, c) {
       return a + "skip-" + b + c;
     });
   }
 
   private removeStyleBlocks(rawChapter: string) {
-    return rawChapter.replace(/<style[^>]*?>(.*?)<\/style[^>]*?>/ig, function (o, s) {
+    return rawChapter.replace(/<style[^>]*?>(.*?)<\/style[^>]*?>/ig, function (_o, _s) {
       return "";
     });
   }
 
   private removeScriptBlocks(rawChapter: string) {
-    return rawChapter.replace(/<script[^>]*?>(.*?)<\/script[^>]*?>/ig, function (o, s) {
+    return rawChapter.replace(/<script[^>]*?>(.*?)<\/script[^>]*?>/ig, function (_o, _s) {
       return "";
     });
   }
 
   private keepOnlyBodyContents(rawChapter: string) {
-    return rawChapter.replace(/<body[^>]*?>(.*)<\/body[^>]*?>/i, function (o, d) {
+    return rawChapter.replace(/<body[^>]*?>(.*)<\/body[^>]*?>/i, function (_o, d) {
       return d.trim();
     });
   }

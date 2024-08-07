@@ -25,7 +25,7 @@ describe('ZipFile', () => {
 
   it('reads file contents', async () => {
     const zf = await ZipFile.openZipFile(file, './test.zip');
-    zf.readFile('file2.txt', (data, err) => {
+    zf.readFile('file2.txt', (data, _err) => {
       expect(data).not.toBeNull();
       expect(data!.toString()).toEqual('Hello World!');
     });

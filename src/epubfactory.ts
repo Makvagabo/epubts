@@ -31,7 +31,7 @@ export class Epubfactory {
     try {
       const mimeType = await zip.file('mimetype').async('string');
       return mimeType.includes('application/epub+zip');
-    } catch(e) {
+    } catch(_e) {
       throw new Error('No mimetype file in archive');
     }
   }

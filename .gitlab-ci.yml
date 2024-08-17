@@ -7,17 +7,18 @@ default:
   tags:
     - general
 
+cache:
+  key:
+    files:
+      - yarn.lock
+  paths:
+    - node_modules/
+
 build:
   stage: build
   image: node:20.16.0-alpine3.20
   script:
       - yarn install --frozen-lockfile
-  cache:
-    key:
-      files:
-        - yarn.lock
-    paths:
-      - node_modules/
 
 lint:
   stage: test

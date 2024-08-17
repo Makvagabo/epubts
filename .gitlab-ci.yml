@@ -33,9 +33,9 @@ lint:
   artifacts:
     when: always
     paths:
-      - junit.xml
+      - lint-results.xml
     reports:
-      junit: junit.xml
+      junit: lint-results.xml
 
 test:
   stage: test
@@ -45,4 +45,10 @@ test:
   cache:
     <<: *yarn_cache
     policy: pull
+  artifacts:
+    when: always
+    paths:
+      - test-results.xml
+    reports:
+      junit: test-results.xml
 ...

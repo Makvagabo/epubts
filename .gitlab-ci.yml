@@ -26,10 +26,16 @@ lint:
   stage: test
   image: node:20.16.0-alpine3.20
   script:
-    - yarn lint
+    - yarn lint-ci
   cache:
     <<: *yarn_cache
     policy: pull
+  artifacts:
+    when: always
+    paths:
+      - junit.xml
+    reports:
+      junit: junit.xml
 
 test:
   stage: test

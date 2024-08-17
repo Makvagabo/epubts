@@ -16,6 +16,7 @@ export interface Metadata {
 }
 
 export interface ManifestItem {
+  id: string;
   href?: string;
   mediaType?: string;
 }
@@ -62,7 +63,7 @@ export class EPub {
   private linkroot = "/links/";
 
   constructor(private zip: JSZip, public version: string, public metadata: Metadata, public manifest: Manifest,
-              public toc: TableOfContents, public contentPath: string) {
+              public toc: TableOfContents, public contentPath: string, public spine: Spine) {
   }
 
   public async getChapter(id: string): Promise<string> {
@@ -171,7 +172,7 @@ export class EPub {
       throw new Error('Chapter not found');
     }
 
-    if (!(this.manifest[id]['media-type'] == "application/xhtml+xml" || this.manifest[id]['media-type'] == "image/svg+xml")) {
+    if (!(this.manifest[id].mediaType == "application/xhtml+xml" || this.manifest[id].mediaType == "image/svg+xml")) {
       throw new Error('Invalid mime type for chapter');
     }
 

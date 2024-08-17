@@ -41,7 +41,7 @@ class EPubParser {
       toc = await this.parseTOC(manifest, tocXml, contentPath);
     }
 
-    return new EPub(zip, version, metadata, manifest, toc, contentPath);
+    return new EPub(zip, version, metadata, manifest, toc, contentPath, spine);
   }
 
   public async parseTOC(manifest: Manifest, tocXml: any, contentPath: string): Promise<TableOfContents> {
@@ -135,7 +135,9 @@ class EPubParser {
      for(const itemNode of manifestNode.item) {
         const attributes = itemNode['@'];
 
-        const manifestItem: ManifestItem = {};
+        const manifestItem: ManifestItem = {
+          id: attributes.id
+        };
 
         if (attributes.href) {
           if (!attributes.href.startsWith(contentPath)) {
@@ -276,8 +278,7 @@ class EPubParser {
   }
 
   public async parseRootFileForContentFilename(containerFileContent: string): Promise<string> {
-    const parser = new Parser();
-    const xml = await parser.parseStringPromise(containerFileContent);
+    const xml = await this.parser.parseStringPromise(containerFileContent);
     return this.findContentFilename(xml);
   }
 

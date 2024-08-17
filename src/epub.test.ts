@@ -1,33 +1,26 @@
-import EPub from "epub";
+import Epub from "epub";
 import {readFileSync} from 'fs';
 
 describe('EPub', () => {
   let epubFile: File;
 
   beforeAll(() => {
-    const _epubFileData = readFileSync('./Henry James - The Death of the Lion.epub');
-    epubFile = new File([epubFile], 'Henry James - The Death of the Lion.epub');
+    const epubFileData = readFileSync('./Henry James - The Death of the Lion.epub');
+    epubFile = new File([epubFileData.buffer], 'Henry James - The Death of the Lion.epub');
   })
 
-  it('can open epub file', () => {
-    const epub = new EPub(epubFile);
-    epub.on('end', () => {
-      expect(epub.metadata.title).toEqual('The Death of the Lion');
-      expect(epub.version).toEqual('3.0');
-    });
-    epub.parse();
+  it('can open epub file', async () => {
+    const epub = await Epub.load(epubFile);
+    expect(epub.metadata.title).toEqual('The Death of the Lion');
+    expect(epub.version).toEqual('3.0');
   });
 
-  it('opens header', () => {
-    const epub = new EPub(epubFile);
-    epub.on('end', () => {
-      expect(epub.flow[1]['media-type']).toEqual('application/xhtml+xml');
-      expect(epub.flow[1].id).toEqual('pg-header');
+  it('opens header', async () => {
+    const epub = await Epub.load(epubFile);
+    expect(epub.spine.contents[1].mediaType).toEqual('application/xhtml+xml');
+    expect(epub.spine.contents[1].id).toEqual('pg-header');
 
-      epub.getChapterRaw(epub.flow[1].id, (data, _err) => {
-        expect(data).toMatch(/^<\?xml.*/);
-      })
-    });
-    epub.parse();
+    const chapter = await epub.getRawChapter(epub.spine.contents[1].id);
+    expect(chapter).toMatch(/^<\?xml.*/);
   });
 });

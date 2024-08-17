@@ -6,13 +6,15 @@ stages:
 default:
   tags:
     - general
+  cache: &yarn_cache
+    key:
+      files:
+        - yarn.lock
+    paths:
+      - node_modules/
+    policy: pull-push
 
-cache:
-  key:
-    files:
-      - yarn.lock
-  paths:
-    - node_modules/
+
 
 build:
   stage: build
@@ -25,10 +27,16 @@ lint:
   image: node:20.16.0-alpine3.20
   script:
     - yarn lint
+  cache:
+    <<: *yarn_cache
+    policy: pull
 
 test:
   stage: test
   image: node:20.16.0-alpine3.20
   script:
     - yarn test
+  cache:
+    <<: *yarn_cache
+    policy: pull
 ...

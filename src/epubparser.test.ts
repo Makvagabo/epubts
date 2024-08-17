@@ -151,59 +151,62 @@ describe('EPubParser', () => {
     it('parses manifest items with id to list', async () => {
       const parsedXml = await parse('<manifest><item id="01"/><item id="02"/></manifest>');
       const manifest = EPubParser.parseManifestNode(parsedXml, dummyPath);
-      expect(manifest).toEqual({'01': {}, '02': {}});
+      expect(manifest).toEqual({'01': { id: '01' }, '02': { id: '02' }});
     });
 
     it('parses manifest items with href', async () => {
       const parsedXml = await parse('<manifest><item id="01"/><item id="02" href="OEBPS/test.css"/></manifest>');
       const manifest = EPubParser.parseManifestNode(parsedXml, dummyPath);
-      expect(manifest).toEqual({'01': {}, '02': {href: 'OEBPS/test.css'}});
+      expect(manifest).toEqual({'01': {id: '01'}, '02': {id: '02', href: 'OEBPS/test.css'}});
     });
 
     it('parses manifest items with href and content path', async () => {
       const parsedXml = await parse('<manifest><item id="01"/><item id="02" href="test.css"/></manifest>');
       const manifest = EPubParser.parseManifestNode(parsedXml, dummyPath);
-      expect(manifest).toEqual({'01': {}, '02': {href: 'OEBPS/test.css'}});
+      expect(manifest).toEqual({'01': {id: '01'}, '02': {id: '02', href: 'OEBPS/test.css'}});
     });
 
     it('parses manifest items with media-type', async () => {
       const parsedXml = await parse('<manifest><item id="01"/><item id="02" media-type="text/plain"/></manifest>');
       const manifest = EPubParser.parseManifestNode(parsedXml, dummyPath);
-      expect(manifest).toEqual({'01': {}, '02': {mediaType: 'text/plain'}});
+      expect(manifest).toEqual({'01': {id: '01'}, '02': {id: '02', mediaType: 'text/plain'}});
     });
   });
 
   describe('parseSpineNode', () => {
     it('parses spine node', async () => {
       const manifest: Manifest = {
-        '01': {href: 'OEBPS/01.html'},
-        '02': {href: 'OEBPS/02.html'}
+        '01': {href: 'OEBPS/01.html', id: '01'},
+        '02': {href: 'OEBPS/02.html', id: '02'}
       };
       const parsedXml = await parse('<spine><itemref idref="01"/><itemref idref="02"/></spine>');
       const spine = EPubParser.parseSpineNode(parsedXml, manifest);
-      expect(spine).toEqual({contents: [{href: 'OEBPS/01.html'}, {href: 'OEBPS/02.html'}]});
+      expect(spine).toEqual({contents: [{id: '01', href: 'OEBPS/01.html'}, {id: '02', href: 'OEBPS/02.html'}]});
     });
 
     it('parses spine node with only one node', async () => {
       const manifest: Manifest = {
-        '01': {href: 'OEBPS/01.html'},
-        '02': {href: 'OEBPS/02.html'}
+        '01': {href: 'OEBPS/01.html', id: '01'},
+        '02': {href: 'OEBPS/02.html', id: '02'}
       };
       const parsedXml = await parse('<spine><itemref idref="01"/></spine>');
       const spine = EPubParser.parseSpineNode(parsedXml, manifest);
-      expect(spine).toEqual({contents: [{href: 'OEBPS/01.html'}]});
+      expect(spine).toEqual({contents: [{id: '01', href: 'OEBPS/01.html'}]});
     });
 
     it('parses spine node with toc', async () => {
       const manifest: Manifest = {
-        'ncx2': {href: 'OEBPS/ncx2.html'},
-        '01': {href: 'OEBPS/01.html'},
-        '02': {href: 'OEBPS/02.html'}
+        'ncx2': {href: 'OEBPS/ncx2.html', id: 'ncx2'},
+        '01': {href: 'OEBPS/01.html', id: '01'},
+        '02': {href: 'OEBPS/02.html', id: '02'}
       };
       const parsedXml = await parse('<spine toc="ncx2"><itemref idref="01"/><itemref idref="02"/></spine>');
       const spine = EPubParser.parseSpineNode(parsedXml, manifest);
       expect(spine).toEqual(
-        {toc: {href: 'OEBPS/ncx2.html'}, contents: [{href: 'OEBPS/01.html'}, {href: 'OEBPS/02.html'}]}
+        {
+          toc: {id: 'ncx2', href: 'OEBPS/ncx2.html'},
+          contents: [{id: '01', href: 'OEBPS/01.html'}, {id: '02', href: 'OEBPS/02.html'}]
+        }
       );
     });
   });
@@ -278,7 +281,9 @@ describe('EPubParser', () => {
     it('parses single navPoint and fills with manifest info', async () => {
       const parsedXml = await parse(dummySingleNodeToc);
       const dummyManifest: Manifest = {
-        'np-1': {href: 'OEBPS/1037185563159831936_394-h-0.htm.xhtml#pg-header-heading', mediaType: 'text/html' }
+        'np-1': {
+          href: 'OEBPS/1037185563159831936_394-h-0.htm.xhtml#pg-header-heading', mediaType: 'text/html', id: 'np-1'
+        }
       }
       const toc = await EPubParser.parseTOC(dummyManifest, parsedXml, 'OEBPS');
       expect(toc).toEqual([{
@@ -294,7 +299,7 @@ describe('EPubParser', () => {
     it('parses single navPoint and skips fill with manifest info when no match is found', async () => {
       const parsedXml = await parse(dummySingleNodeToc);
       const dummyManifest: Manifest = {
-        'np-1': {href: 'somedifferentlink.html'}
+        'np-1': {href: 'somedifferentlink.html', id: 'np-1'}
       }
       const toc = await EPubParser.parseTOC(dummyManifest, parsedXml, 'OEBPS');
       expect(toc).toEqual([{

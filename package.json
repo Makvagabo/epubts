@@ -6,8 +6,8 @@
   "scripts": {
     "test": "jest",
     "test-ci": "jest --ci --reporters=default --reporters=jest-junit",
-    "lint": "eslint -c eslint.config.mjs --ignore-pattern src/epub.ts src",
-    "lint-ci": "eslint -c eslint.config.mjs --ignore-pattern src/epub.ts --format junit --output-file lint-results.xml src"
+    "lint": "eslint -c eslint.config.mjs --ignore-pattern src/epub_old.ts src",
+    "lint-ci": "eslint -c eslint.config.mjs --ignore-pattern src/epub_old.ts --format junit --output-file lint-results.xml src"
   },
   "author": "Benjamin Behringer",
   "license": "MIT",

@@ -36,7 +36,7 @@ class EPubParser {
       }
     }
 
-    if (spine.toc) {
+    if (spine.toc && spine.toc.href && zip) {
       const tocXml = await this.loadTocXml(zip, spine.toc.href);
       toc = await this.parseTOC(manifest, tocXml, contentPath);
     }
@@ -94,7 +94,7 @@ class EPubParser {
     const order = Number(navPoint["@"] && navPoint["@"].playOrder || 0);
     const href = navPoint.content && navPoint.content["@"] && typeof navPoint.content["@"].src == 'string' ? navPoint.content["@"].src.trim() : '';
 
-    const element: NavElement = {
+    let element: NavElement = {
       level,
       order,
       title,
@@ -104,11 +104,12 @@ class EPubParser {
 
     if (href) {
       element.href = path.concat([href]).join("/");
+      const manifestId = hrefToManifestIdMap[element.href];
 
-      if (hrefToManifestIdMap[element.href]) {
+      if (manifestId) {
         // link existing object
-        element.href = manifest[hrefToManifestIdMap[element.href]].href;
-        element.id = hrefToManifestIdMap[element.href];
+        element = { ...element, ...manifest[manifestId] };
+        element.id = manifestId;
       } else {
         // use new one
         element.href = href;

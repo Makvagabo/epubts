@@ -41,6 +41,7 @@ export interface NavElement {
   title: string;
   href: string;
   id: string;
+  mediaType?: string;
 }
 
 export interface ContentFile {

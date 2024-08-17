@@ -278,6 +278,22 @@ describe('EPubParser', () => {
     it('parses single navPoint and fills with manifest info', async () => {
       const parsedXml = await parse(dummySingleNodeToc);
       const dummyManifest: Manifest = {
+        'np-1': {href: 'OEBPS/1037185563159831936_394-h-0.htm.xhtml#pg-header-heading', mediaType: 'text/html' }
+      }
+      const toc = await EPubParser.parseTOC(dummyManifest, parsedXml, 'OEBPS');
+      expect(toc).toEqual([{
+        level: 0,
+        order: 1,
+        title: 'The Project Gutenberg eBook of Cranford',
+        href: 'OEBPS/1037185563159831936_394-h-0.htm.xhtml#pg-header-heading',
+        id: 'np-1',
+        mediaType: 'text/html'
+      }]);
+    });
+
+    it('parses single navPoint and skips fill with manifest info when no match is found', async () => {
+      const parsedXml = await parse(dummySingleNodeToc);
+      const dummyManifest: Manifest = {
         'np-1': {href: 'somedifferentlink.html'}
       }
       const toc = await EPubParser.parseTOC(dummyManifest, parsedXml, 'OEBPS');
@@ -285,7 +301,7 @@ describe('EPubParser', () => {
         level: 0,
         order: 1,
         title: 'The Project Gutenberg eBook of Cranford',
-        href: 'somedifferentlink.html',
+        href: '1037185563159831936_394-h-0.htm.xhtml#pg-header-heading',
         id: 'np-1'
       }]);
     });

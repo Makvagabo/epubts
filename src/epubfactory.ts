@@ -1,6 +1,6 @@
 import PromiseFileReader from 'promise-file-reader';
 import JSZip from 'jszip';
-import {EPub} from 'epubnew';
+import {EPub} from 'epub';
 import EPubParser from 'epubparser';
 
 export class Epubfactory {

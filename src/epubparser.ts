@@ -1,4 +1,4 @@
-import {EPub, Manifest, ManifestItem, Metadata, NavElement, Spine, TableOfContents} from 'epubnew';
+import {EPub, Manifest, ManifestItem, Metadata, NavElement, Spine, TableOfContents} from 'epub';
 import {defaults as xml2jsDefaults, Parser} from 'xml2js';
 import JSZip from 'jszip';
 

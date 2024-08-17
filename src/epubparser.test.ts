@@ -1,14 +1,14 @@
 import {readFileSync} from 'fs';
 import EPubParser from 'epubparser';
 import {defaults as xml2jsDefaults, Parser} from 'xml2js';
-import {Manifest, Metadata} from 'epubnew';
+import {Manifest, Metadata} from 'epub';
 
 async function parse(content: string): Promise<any> {
   return await new Parser(xml2jsDefaults['0.1']).parseStringPromise(content);
 }
 
 describe('EPubParser', () => {
-  it('parses content file to EPub', async () => {
+  it('parses content file to Epub_old', async () => {
     const dummyContentFileContent =  readFileSync('./src/dummyContent.opf').toString();
     await EPubParser.parseContentFileToEPub(dummyContentFileContent, null, '');
   });

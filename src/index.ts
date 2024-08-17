@@ -1,3 +1,3 @@
-import EPub from 'epub';
-export { EPub };
-export default EPub;
+import Epub from 'epub';
+export { Epub };
+export default Epub;

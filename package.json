@@ -5,7 +5,7 @@
   "main": "index.ts",
   "scripts": {
     "test": "jest",
-    "test-ci": "jest --ci --reporters=default --reporters=jest-junit --outputFile=test-results.xml",
+    "test-ci": "jest --ci --reporters=default --reporters=jest-junit",
     "lint": "eslint -c eslint.config.mjs --ignore-pattern src/epub.ts src",
     "lint-ci": "eslint -c eslint.config.mjs --ignore-pattern src/epub.ts --format junit --output-file lint-results.xml src"
   },
@@ -31,5 +31,15 @@
     "jszip": "^3.10.1",
     "promise-file-reader": "^1.0.3",
     "xml2js": "^0.6.2"
+  },
+  "jest-junit": {
+    "suiteName": "jest tests",
+    "outputDirectory": ".",
+    "outputName": "test-results.xml",
+    "uniqueOutputName": "false",
+    "classNameTemplate": "{classname}-{title}",
+    "titleTemplate": "{classname}-{title}",
+    "ancestorSeparator": " › ",
+    "usePathForSuiteName": "true"
   }
 }

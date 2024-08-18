@@ -1,4 +1,4 @@
-import {EPub, Manifest, ManifestItem, Metadata, NavElement, Spine, TableOfContents} from 'epub';
+import {EPub, Manifest, ResourceItem, Metadata, NavElement, Spine, TableOfContents} from 'epub';
 import {defaults as xml2jsDefaults, Parser} from 'xml2js';
 import JSZip from 'jszip';
 
@@ -15,8 +15,6 @@ class EPubParser {
     let metadata: Metadata = {};
     let manifest: Manifest = {};
     let spine: Spine = { contents: [] };
-    let _flow: ManifestItem[] = [];
-    // const guide: Guide = [];
     let toc: TableOfContents = [];
 
 
@@ -31,7 +29,6 @@ class EPubParser {
           break;
         case 'spine':
           spine = this.parseSpineNode(xml[tag], manifest);
-          _flow = spine.contents;
           break;
       }
     }
@@ -41,7 +38,7 @@ class EPubParser {
       toc = await this.parseTOC(manifest, tocXml, contentPath);
     }
 
-    return new EPub(zip, version, metadata, manifest, toc, contentPath, spine);
+    return new EPub(zip, version, metadata, manifest, spine, toc, contentPath);
   }
 
   public async parseTOC(manifest: Manifest, tocXml: any, contentPath: string): Promise<TableOfContents> {
@@ -135,8 +132,10 @@ class EPubParser {
      for(const itemNode of manifestNode.item) {
         const attributes = itemNode['@'];
 
-        const manifestItem: ManifestItem = {
-          id: attributes.id
+        const manifestItem: ResourceItem = {
+          id: attributes.id,
+          href: '',
+          mediaType: ''
         };
 
         if (attributes.href) {

@@ -15,26 +15,20 @@ export interface Metadata {
   creatorFileAs?: string;
 }
 
-export interface ManifestItem {
+export interface ResourceItem {
   id: string;
-  href?: string;
-  mediaType?: string;
+  href: string;
+  mediaType: string;
 }
 
 export interface Manifest {
-  [key: string]: ManifestItem;
+  [key: string]: ResourceItem;
 }
 
 export interface Spine {
-  toc?: ManifestItem;
-  contents: ManifestItem[];
+  toc?: ResourceItem;
+  contents: ResourceItem[];
 }
-
-export interface GuideItem {
-  href: string;
-}
-
-export type Guide = GuideItem[];
 
 export interface NavElement {
   level: number;
@@ -63,7 +57,7 @@ export class EPub {
   private linkroot = "/links/";
 
   constructor(private zip: JSZip, public version: string, public metadata: Metadata, public manifest: Manifest,
-              public toc: TableOfContents, public contentPath: string, public spine: Spine) {
+              public spine: Spine, public toc: TableOfContents, public contentPath: string) {
   }
 
   public async getChapter(id: string): Promise<string> {
@@ -184,7 +178,7 @@ export class EPub {
       throw new Error('Image not found');
     }
 
-    if ((this.manifest[id]['media-type'] || "").toLowerCase().trim().substr(0, 6)  !=  "image/") {
+    if ((this.manifest[id].mediaType || "").toLowerCase().trim().substr(0, 6)  !=  "image/") {
       throw new Error("Invalid mime type for image");
     }
 
@@ -200,7 +194,7 @@ export class EPub {
 
     return {
       content: fileContent,
-      mediaType: this.manifest[id]['media-type']
+      mediaType: this.manifest[id].mediaType
     }
   }
 

@@ -1,0 +1,54 @@
+---
+stages:
+  - build
+  - test
+
+default:
+  tags:
+    - general
+  cache: &yarn_cache
+    key:
+      files:
+        - yarn.lock
+    paths:
+      - node_modules/
+    policy: pull-push
+
+
+
+build:
+  stage: build
+  image: node:20.16.0-alpine3.20
+  script:
+      - yarn install --dev --frozen-lockfile
+
+lint:
+  stage: test
+  image: node:20.16.0-alpine3.20
+  script:
+    - yarn lint-ci
+  cache:
+    <<: *yarn_cache
+    policy: pull
+  artifacts:
+    when: always
+    paths:
+      - lint-results.xml
+    reports:
+      junit: lint-results.xml
+
+test:
+  stage: test
+  image: node:20.16.0-alpine3.20
+  script:
+    - yarn test-ci
+  cache:
+    <<: *yarn_cache
+    policy: pull
+  artifacts:
+    when: always
+    paths:
+      - test-results.xml
+    reports:
+      junit: test-results.xml
+...

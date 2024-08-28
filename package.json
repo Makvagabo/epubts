@@ -1,0 +1,45 @@
+{
+  "name": "epubts",
+  "version": "0.0.1",
+  "description": "ePub loader for the browser",
+  "main": "index.ts",
+  "scripts": {
+    "test": "jest",
+    "test-ci": "jest --ci --reporters=default --reporters=jest-junit",
+    "lint": "eslint -c eslint.config.mjs --ignore-pattern src/epub_old.ts src",
+    "lint-ci": "eslint -c eslint.config.mjs --ignore-pattern src/epub_old.ts --format junit --output-file lint-results.xml src"
+  },
+  "author": "Benjamin Behringer",
+  "license": "MIT",
+  "devDependencies": {
+    "@eslint/js": "^9.8.0",
+    "@jest/globals": "^29.7.0",
+    "@types/eslint__js": "^8.42.3",
+    "@types/jest": "^29.5.12",
+    "@types/jszip": "^3.4.1",
+    "@types/xml2js": "^0.4.14",
+    "eslint": "^9.8.0",
+    "eslint-formatter-junit": "^8.40.0",
+    "jest": "^29.7.0",
+    "jest-environment-jsdom": "^29.7.0",
+    "jest-junit": "^16.0.0",
+    "ts-jest": "^29.1.2",
+    "typescript": "^5.5.4",
+    "typescript-eslint": "^8.0.1"
+  },
+  "dependencies": {
+    "jszip": "^3.10.1",
+    "promise-file-reader": "^1.0.3",
+    "xml2js": "^0.6.2"
+  },
+  "jest-junit": {
+    "suiteName": "jest tests",
+    "outputDirectory": ".",
+    "outputName": "test-results.xml",
+    "uniqueOutputName": "false",
+    "classNameTemplate": "{classname}-{title}",
+    "titleTemplate": "{classname}-{title}",
+    "ancestorSeparator": " › ",
+    "usePathForSuiteName": "true"
+  }
+}

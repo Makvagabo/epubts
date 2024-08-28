@@ -1,6 +1,7 @@
-import {EPub, Manifest, ResourceItem, Metadata, NavElement, Spine, TableOfContents} from 'epub';
+import {EPub} from 'epub';
 import {defaults as xml2jsDefaults, Parser} from 'xml2js';
 import JSZip from 'jszip';
+import {Manifest, Metadata, NavElement, ResourceItem, Spine, TableOfContents} from 'types';
 
 class EPubParser {
   private parser: Parser;

@@ -23,4 +23,10 @@ describe('EPub', () => {
     const chapter = await epub.getRawChapter(epub.spine.contents[1].id);
     expect(chapter).toMatch(/^<\?xml.*/);
   });
+
+  it('opens chapter', async () => {
+    const epub = await Epub.load(epubFile);
+    const chapter = await epub.getChapter('pg-footer');
+    expect(chapter).toMatch(/^<section.*/);
+  });
 });

@@ -48,4 +48,10 @@ describe('EPub', () => {
     const epub = await Epub.load(epubFile);
     expect(await epub.hasDRM()).toBeFalsy();
   });
+
+  it('loads spine', async () => {
+    const epub = await Epub.load(epubFile);
+    const spineItemIds = epub.spine.contents.map(item => item.id);
+    expect(spineItemIds).toEqual(['coverpage-wrapper', 'pg-header', 'pg-footer', 'item6']);
+  });
 });

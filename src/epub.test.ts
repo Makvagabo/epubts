@@ -24,9 +24,28 @@ describe('EPub', () => {
     expect(chapter).toMatch(/^<\?xml.*/);
   });
 
-  it('opens chapter', async () => {
+  it('opens chapter with content', async () => {
     const epub = await Epub.load(epubFile);
     const chapter = await epub.getChapter('pg-footer');
     expect(chapter).toMatch(/^<section.*/);
+  });
+
+  it('opens image', async () => {
+    const epub = await Epub.load(epubFile);
+    const image = await epub.getImage('id-6989820804442268709');
+    expect(image.mediaType).toEqual('image/jpeg');
+    expect(image.content.length).toEqual(2062);
+  });
+
+  it('retrieves files', async () => {
+    const epub = await Epub.load(epubFile);
+    const file = await epub.getFile('item2');
+    expect(file.mediaType).toEqual('text/css');
+    expect(file.content).toMatch(/^@charset "utf-8";.*/);
+  });
+
+  it('checks for DRM', async () => {
+    const epub = await Epub.load(epubFile);
+    expect(await epub.hasDRM()).toBeFalsy();
   });
 });

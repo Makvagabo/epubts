@@ -2,30 +2,38 @@
   "name": "epubts",
   "version": "0.0.1",
   "description": "ePub loader for the browser",
-  "main": "index.ts",
+  "keyvwords": [
+    "epub",
+    "browser",
+    "loader",
+    "parser"
+  ],
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "/dist"
+  ],
+  "type": "module",
   "scripts": {
-    "test": "jest",
-    "test-ci": "jest --ci --reporters=default --reporters=jest-junit",
+    "build": "tsc",
+    "test": "vitest run --environment jsdom",
+    "test-ci": "vitest run --environment jsdom --reporter=verbose --reporter=junit",
     "lint": "eslint -c eslint.config.mjs --ignore-pattern src/epub_old.ts src",
-    "lint-ci": "eslint -c eslint.config.mjs --ignore-pattern src/epub_old.ts --format junit --output-file lint-results.xml src"
+    "lint-ci": "eslint -c eslint.config.mjs --ignore-pattern src/epub_old.ts --format junit --output-file lint-results.xml src",
+    "clean": "rm -rf dist"
   },
   "author": "Benjamin Behringer",
   "license": "MIT",
   "devDependencies": {
     "@eslint/js": "^9.8.0",
-    "@jest/globals": "^29.7.0",
     "@types/eslint__js": "^8.42.3",
-    "@types/jest": "^29.5.12",
     "@types/jszip": "^3.4.1",
     "@types/xml2js": "^0.4.14",
     "eslint": "^9.8.0",
     "eslint-formatter-junit": "^8.40.0",
-    "jest": "^29.7.0",
-    "jest-environment-jsdom": "^29.7.0",
-    "jest-junit": "^16.0.0",
-    "ts-jest": "^29.1.2",
     "typescript": "^5.5.4",
-    "typescript-eslint": "^8.0.1"
+    "typescript-eslint": "^8.0.1",
+    "vitest": "^2.0.5"
   },
   "dependencies": {
     "jszip": "^3.10.1",

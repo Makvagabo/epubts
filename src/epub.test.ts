@@ -1,4 +1,4 @@
-import Epub from "epub";
+import Epub from "./epub.js";
 import {readFileSync} from 'fs';
 
 describe('EPub', () => {
@@ -7,7 +7,7 @@ describe('EPub', () => {
   beforeAll(() => {
     const epubFileData = readFileSync('./Henry James - The Death of the Lion.epub');
     epubFile = new File([epubFileData.buffer], 'Henry James - The Death of the Lion.epub');
-  })
+  });
 
   it('can open epub file', async () => {
     const epub = await Epub.load(epubFile);

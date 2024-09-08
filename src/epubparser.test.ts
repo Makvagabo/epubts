@@ -1,8 +1,8 @@
 import {readFileSync} from 'fs';
-import EPubParser from 'epubparser';
+import EPubParser from './epubparser.js';
 import {defaults as xml2jsDefaults, Parser} from 'xml2js';
 
-import {Manifest, Metadata} from 'types';
+import {Manifest, Metadata} from './types.js';
 
 async function parse(content: string): Promise<any> {
   return await new Parser(xml2jsDefaults['0.1']).parseStringPromise(content);

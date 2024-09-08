@@ -1,5 +1,6 @@
-import {ZipFile, FileNotFoundError} from "zipfile";
+import {ZipFile, FileNotFoundError} from "./zipfile.js";
 import { readFileSync } from 'fs';
+import {vi} from 'vitest';
 
 describe('ZipFile', () => {
   let file: Buffer;
@@ -16,7 +17,7 @@ describe('ZipFile', () => {
 
   it('returns an error when reading a non-existant file', async () => {
     const zf = await ZipFile.openZipFile(file, './test.zip');
-    const callback = jest.fn();
+    const callback = vi.fn();
     zf.readFile('doesnotexist.txt', callback);
 
     expect(callback.mock.calls[0][0]).toBeNull();

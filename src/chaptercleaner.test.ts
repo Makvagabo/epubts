@@ -1,4 +1,4 @@
-import ChapterCleaner from 'chaptercleaner';
+import ChapterCleaner from './chaptercleaner.js';
 
 describe('ChapterCleaner', () => {
   describe('keepOnlyBodyContents', () => {

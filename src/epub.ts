@@ -1,7 +1,7 @@
 import JSZip from 'jszip';
-import {Epubfactory} from 'epubfactory';
-import ChapterCleaner from 'chaptercleaner';
-import {ContentFile, Manifest, Metadata, Spine, TableOfContents} from 'types';
+import {Epubfactory} from './epubfactory.js';
+import ChapterCleaner from './chaptercleaner.js';
+import {ContentFile, Manifest, Metadata, Spine, TableOfContents} from './types.js';
 
 export class EPub {
   private imageroot = "/images/";

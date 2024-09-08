@@ -1,4 +1,4 @@
-import {Manifest} from 'types';
+import {Manifest} from './types.js';
 
 export class ChapterCleaner {
   public cleanChapter(rawChapter: string, manifest: Manifest, contentPath: string, imageroot: string, linkroot: string): string {

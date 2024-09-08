@@ -6,7 +6,7 @@ A typescript ePub loader library for the browser. Works on browser File objects.
 
 ```typescript
 // Load Epub singleton
-import Epub from "epub";
+import Epub from "epubts";
 // Load your file
 const epub = await Epub.load(epubFile);
 // Get the items ids of the content

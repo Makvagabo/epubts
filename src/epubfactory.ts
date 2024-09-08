@@ -1,7 +1,7 @@
 import PromiseFileReader from 'promise-file-reader';
 import JSZip from 'jszip';
-import {EPub} from 'epub';
-import EPubParser from 'epubparser';
+import {EPub} from './epub.js';
+import EPubParser from './epubparser.js';
 
 export class Epubfactory {
   public static async load(file: File): Promise<EPub> {

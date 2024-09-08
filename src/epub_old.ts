@@ -2,7 +2,7 @@ import {Options, Parser, defaults as xml2jsDefaults} from 'xml2js';
 import { EventEmitter } from "events";
 import JSZip from "jszip";
 
-import { ZipFile } from "zipfile";
+import { ZipFile } from "./zipfile.js";
 import PromiseFileReader from 'promise-file-reader';
 
 interface ParseOptions {

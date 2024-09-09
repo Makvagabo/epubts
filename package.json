@@ -1,6 +1,6 @@
 {
   "name": "epubts",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "ePub loader for the browser",
   "keyvwords": [
     "epub",

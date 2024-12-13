@@ -1,6 +1,6 @@
 {
   "name": "epubts",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "ePub loader for the browser",
   "homepage": "https://github.com/GevatterGaul/epubts",
   "keyvwords": [

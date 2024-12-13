@@ -15,7 +15,7 @@ const spineItemIds = epub.spine.contents.map(item => item.id);
 const chapterData = await epub.getChapter(spineItemIds[0]);
 ```
 
-# Aknowledgements
+# Acknowledgements
 
 This project is based on the [epub](https://github.com/julien-c/epub) js node library.
 

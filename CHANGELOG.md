@@ -4,6 +4,7 @@
 
 * Update pipeline images to node:22.11.0-alpine3.20
 * Update project URLs in package.json
+* Add test for exceptions
 
 ## 0.1.3
 

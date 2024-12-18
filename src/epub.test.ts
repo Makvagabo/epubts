@@ -15,6 +15,14 @@ describe('EPub', () => {
     expect(epub.version).toEqual('3.0');
   });
 
+  it('throws Error when file cannot be opened', async () => {
+    try {
+      await Epub.load(null);
+    } catch(e) {
+      expect(e.message).toEqual('Must be a File or Blob');
+    }
+  });
+
   it('opens header', async () => {
     const epub = await Epub.load(epubFile);
     expect(epub.spine.contents[1].mediaType).toEqual('application/xhtml+xml');

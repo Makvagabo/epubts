@@ -1,6 +1,7 @@
 import {readFileSync} from 'fs';
 import EPubParser from './epubparser.js';
 import {defaults as xml2jsDefaults, Parser} from 'xml2js';
+import { describe, expect, it } from 'vitest';
 
 import {Manifest, Metadata} from './types.js';
 

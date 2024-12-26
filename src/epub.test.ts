@@ -1,6 +1,8 @@
 import Epub from "./epub.js";
 import {readFileSync} from 'fs';
 
+import { describe, expect, it, beforeAll } from 'vitest';
+
 describe('EPub', () => {
   let epubFile: File;
 

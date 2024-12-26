@@ -1,5 +1,7 @@
 import ChapterCleaner from './chaptercleaner.js';
 
+import { describe, expect, it } from 'vitest';
+
 describe('ChapterCleaner', () => {
   describe('keepOnlyBodyContents', () => {
     it('only keeps body contents', () => {

@@ -24,8 +24,8 @@
   "type": "module",
   "scripts": {
     "build": "tsc",
-    "test": "vitest run --environment jsdom",
-    "test-ci": "vitest run --environment jsdom --reporter=verbose --reporter=junit",
+    "test": "vitest run",
+    "test-ci": "vitest run --reporter=verbose --reporter=junit",
     "lint": "eslint -c eslint.config.mjs src",
     "lint-ci": "eslint -c eslint.config.mjs --format junit --output-file lint-results.xml src",
     "clean": "rm -rf dist"

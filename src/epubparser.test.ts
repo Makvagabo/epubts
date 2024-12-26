@@ -1,8 +1,11 @@
-import {readFileSync} from 'fs';
-import EPubParser from './epubparser.js';
-import {defaults as xml2jsDefaults, Parser} from 'xml2js';
+// noinspection XmlUnresolvedReference
 
-import {Manifest, Metadata} from './types.js';
+import { readFileSync } from 'fs';
+import { describe, expect, it } from 'vitest';
+import { defaults as xml2jsDefaults, Parser } from 'xml2js';
+
+import EPubParser from './epubparser.js';
+import { Manifest, Metadata } from './types.js';
 
 async function parse(content: string): Promise<any> {
   return await new Parser(xml2jsDefaults['0.1']).parseStringPromise(content);

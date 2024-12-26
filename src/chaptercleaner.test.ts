@@ -1,3 +1,5 @@
+import { describe, expect, it } from 'vitest';
+
 import ChapterCleaner from './chaptercleaner.js';
 
 describe('ChapterCleaner', () => {

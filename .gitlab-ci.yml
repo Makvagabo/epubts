@@ -27,6 +27,7 @@ lint:
   stage: test
   image: node:22.11.0-alpine3.20
   script:
+    - yarn install --dev --frozen-lockfile
     - yarn lint-ci
   cache:
     <<: *yarn_cache
@@ -42,6 +43,7 @@ test:
   stage: test
   image: node:22.11.0-alpine3.20
   script:
+    - yarn install --dev --frozen-lockfile
     - yarn test-ci
   cache:
     <<: *yarn_cache

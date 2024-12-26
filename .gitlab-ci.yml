@@ -21,6 +21,7 @@ build:
   image: node:22.11.0-alpine3.20
   script:
       - yarn install --dev --frozen-lockfile
+      - yarn build
 
 lint:
   stage: test

@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.6
+
+* Add events library as dependency because it is needed by xml2js
+
 ## 0.1.5
 
 * Re-add missing dist folder in artifact

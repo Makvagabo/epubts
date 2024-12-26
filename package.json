@@ -1,6 +1,6 @@
 {
   "name": "epubts",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "ePub loader for the browser",
   "homepage": "https://boredconsultant.com/epubts/",
   "repository": {

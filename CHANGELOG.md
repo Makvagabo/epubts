@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.1.5
+
+* Re-add missing dist folder in artifact
+* Fix types in tests
+
 ## 0.1.4
 
 * Update pipeline images to node:22.11.0-alpine3.20

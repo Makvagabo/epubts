@@ -3,6 +3,8 @@ import { describe, expect, it, beforeAll } from 'vitest';
 import Epub from "./epub.js";
 import { readFileSync } from 'fs';
 
+import { describe, expect, it, beforeAll } from 'vitest';
+
 describe('EPub', () => {
   let epubFile: File;
 
@@ -15,6 +17,14 @@ describe('EPub', () => {
     const epub = await Epub.load(epubFile);
     expect(epub.metadata.title).toEqual('The Death of the Lion');
     expect(epub.version).toEqual('3.0');
+  });
+
+  it('throws Error when file cannot be opened', async () => {
+    try {
+      await Epub.load(null);
+    } catch(e) {
+      expect(e.message).toEqual('Must be a File or Blob');
+    }
   });
 
   it('opens header', async () => {

@@ -1,14 +1,19 @@
 import { describe, expect, it, beforeAll } from 'vitest';
-
-import Epub from "./epub.js";
 import { readFileSync } from 'fs';
+
+import Epub from './epub.js';
 
 describe('EPub', () => {
   let epubFile: File;
 
   beforeAll(() => {
-    const epubFileData = readFileSync('./Henry James - The Death of the Lion.epub');
-    epubFile = new File([new Uint8Array(epubFileData)], 'Henry James - The Death of the Lion.epub');
+    const epubFileData = readFileSync(
+      './Henry James - The Death of the Lion.epub',
+    );
+    epubFile = new File(
+      [new Uint8Array(epubFileData)],
+      'Henry James - The Death of the Lion.epub',
+    );
   });
 
   it('can open epub file', async () => {
@@ -53,7 +58,12 @@ describe('EPub', () => {
 
   it('loads spine', async () => {
     const epub = await Epub.load(epubFile);
-    const spineItemIds = epub.spine.contents.map(item => item.id);
-    expect(spineItemIds).toEqual(['coverpage-wrapper', 'pg-header', 'pg-footer', 'item6']);
+    const spineItemIds = epub.spine.contents.map((item) => item.id);
+    expect(spineItemIds).toEqual([
+      'coverpage-wrapper',
+      'pg-header',
+      'pg-footer',
+      'item6',
+    ]);
   });
 });

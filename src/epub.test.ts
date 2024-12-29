@@ -1,18 +1,33 @@
-import Epub from "./epub.js";
-import {readFileSync} from 'fs';
+import Epub from './epub.js';
+import { readFileSync } from 'fs';
+
+import { describe, expect, it, beforeAll } from 'vitest';
 
 describe('EPub', () => {
   let epubFile: File;
 
   beforeAll(() => {
-    const epubFileData = readFileSync('./Henry James - The Death of the Lion.epub');
-    epubFile = new File([epubFileData.buffer], 'Henry James - The Death of the Lion.epub');
+    const epubFileData = readFileSync(
+      './Henry James - The Death of the Lion.epub',
+    );
+    epubFile = new File(
+      [epubFileData.buffer],
+      'Henry James - The Death of the Lion.epub',
+    );
   });
 
   it('can open epub file', async () => {
     const epub = await Epub.load(epubFile);
     expect(epub.metadata.title).toEqual('The Death of the Lion');
     expect(epub.version).toEqual('3.0');
+  });
+
+  it('throws Error when file cannot be opened', async () => {
+    try {
+      await Epub.load(null);
+    } catch (e) {
+      expect(e.message).toEqual('Must be a File or Blob');
+    }
   });
 
   it('opens header', async () => {
@@ -52,6 +67,11 @@ describe('EPub', () => {
   it('loads spine', async () => {
     const epub = await Epub.load(epubFile);
     const spineItemIds = epub.spine.contents.map(item => item.id);
-    expect(spineItemIds).toEqual(['coverpage-wrapper', 'pg-header', 'pg-footer', 'item6']);
+    expect(spineItemIds).toEqual([
+      'coverpage-wrapper',
+      'pg-header',
+      'pg-footer',
+      'item6',
+    ]);
   });
 });

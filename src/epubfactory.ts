@@ -1,6 +1,6 @@
 import PromiseFileReader from 'promise-file-reader';
 import JSZip from 'jszip';
-import {EPub} from './epub.js';
+import { EPub } from './epub.js';
 import EPubParser from './epubparser.js';
 
 export class Epubfactory {
@@ -13,17 +13,31 @@ export class Epubfactory {
     }
 
     const contentFileFilename = await this.getContentFileFilename(zip);
-    const contentFileContent = await this.getContentFileContent(zip, contentFileFilename);
+    const contentFileContent = await this.getContentFileContent(
+      zip,
+      contentFileFilename,
+    );
     const contentPath = this.getBasePath(contentFileFilename);
-    return EPubParser.parseContentFileToEPub(contentFileContent, zip, contentPath);
+    return EPubParser.parseContentFileToEPub(
+      contentFileContent,
+      zip,
+      contentPath,
+    );
   }
 
   private static async getContentFileFilename(zip: JSZip): Promise<string> {
-    const containerFileContent = await zip.file('META-INF/container.xml').async('string');
-    return await EPubParser.parseRootFileForContentFilename(containerFileContent);
+    const containerFileContent = await zip
+      .file('META-INF/container.xml')
+      .async('string');
+    return await EPubParser.parseRootFileForContentFilename(
+      containerFileContent,
+    );
   }
 
-  private static async getContentFileContent(zip: JSZip, contentFileFilename: string): Promise<string> {
+  private static async getContentFileContent(
+    zip: JSZip,
+    contentFileFilename: string,
+  ): Promise<string> {
     return await zip.file(contentFileFilename).async('string');
   }
 
@@ -31,7 +45,7 @@ export class Epubfactory {
     try {
       const mimeType = await zip.file('mimetype').async('string');
       return mimeType.includes('application/epub+zip');
-    } catch(_e) {
+    } catch (_e) {
       throw new Error('No mimetype file in archive');
     }
   }

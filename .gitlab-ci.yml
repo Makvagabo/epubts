@@ -14,18 +14,18 @@ default:
       - node_modules/
     policy: pull-push
 
-
-
 build:
   stage: build
   image: node:22.11.0-alpine3.20
   script:
-      - yarn install --dev --frozen-lockfile
+    - yarn install --dev --frozen-lockfile
+    - yarn build
 
 lint:
   stage: test
   image: node:22.11.0-alpine3.20
   script:
+    - yarn install --dev --frozen-lockfile
     - yarn lint-ci
   cache:
     <<: *yarn_cache
@@ -41,6 +41,7 @@ test:
   stage: test
   image: node:22.11.0-alpine3.20
   script:
+    - yarn install --dev --frozen-lockfile
     - yarn test-ci
   cache:
     <<: *yarn_cache
@@ -51,4 +52,3 @@ test:
       - test-results.xml
     reports:
       junit: test-results.xml
-...

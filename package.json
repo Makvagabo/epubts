@@ -28,7 +28,8 @@
     "test-ci": "vitest run --reporter=verbose --reporter=junit",
     "lint": "eslint -c eslint.config.mjs src",
     "lint-ci": "eslint -c eslint.config.mjs --format junit --output-file lint-results.xml src",
-    "clean": "rm -rf dist"
+    "clean": "rm -rf dist",
+    "prettier": "prettier --write src/**/*.ts .gitlab-ci.yml tsconfig.json vitest.config.js package.json"
   },
   "author": "Benjamin Behringer",
   "license": "MIT",
@@ -41,6 +42,7 @@
     "eslint": "^9.8.0",
     "eslint-formatter-junit": "^8.40.0",
     "jsdom": "^25.0.1",
+    "prettier": "^3.4.2",
     "typescript": "^5.5.4",
     "typescript-eslint": "^8.0.1",
     "vitest": "^2.0.5"

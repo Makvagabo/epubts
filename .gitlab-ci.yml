@@ -14,14 +14,12 @@ default:
       - node_modules/
     policy: pull-push
 
-
-
 build:
   stage: build
   image: node:22.11.0-alpine3.20
   script:
-      - yarn install --dev --frozen-lockfile
-      - yarn build
+    - yarn install --dev --frozen-lockfile
+    - yarn build
 
 lint:
   stage: test
@@ -54,4 +52,3 @@ test:
       - test-results.xml
     reports:
       junit: test-results.xml
-...

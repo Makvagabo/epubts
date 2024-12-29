@@ -5,7 +5,9 @@ import { describe, expect, it } from 'vitest';
 describe('ChapterCleaner', () => {
   describe('keepOnlyBodyContents', () => {
     it('only keeps body contents', () => {
-      const result = ChapterCleaner.keepOnlyBodyContents('<html><head></head><body>test</body></html>');
+      const result = ChapterCleaner.keepOnlyBodyContents(
+        '<html><head></head><body>test</body></html>',
+      );
       expect(result).toEqual('test');
     });
   });
@@ -17,7 +19,9 @@ describe('ChapterCleaner', () => {
     });
 
     it('removes multiple script blocks', () => {
-      const result = ChapterCleaner.removeScriptBlocks('<script src="test.js">test1</script><p>foo<p/><script>test2</script>');
+      const result = ChapterCleaner.removeScriptBlocks(
+        '<script src="test.js">test1</script><p>foo<p/><script>test2</script>',
+      );
       expect(result).toEqual('<p>foo<p/>');
     });
   });

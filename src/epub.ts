@@ -10,8 +10,8 @@ import {
 } from './types.js';
 
 export class EPub {
-  private imageroot = '/images/';
-  private linkroot = '/links/';
+  private imageRoot = '/images/';
+  private linkRoot = '/links/';
 
   constructor(
     private zip: JSZip,
@@ -25,13 +25,15 @@ export class EPub {
 
   public async getChapter(id: string): Promise<string> {
     const rawChapter = await this.getRawChapter(id);
-    return ChapterCleaner.cleanChapter(
+    const { manifest, contentPath, imageRoot, linkRoot } = this;
+
+    return ChapterCleaner.cleanChapter({
       rawChapter,
-      this.manifest,
-      this.contentPath,
-      this.imageroot,
-      this.linkroot,
-    );
+      manifest,
+      contentPath,
+      imageRoot,
+      linkRoot,
+    });
   }
 
   public async getRawChapter(id: string): Promise<string> {

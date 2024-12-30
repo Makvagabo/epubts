@@ -1,135 +1,141 @@
-import { Manifest } from './types.js';
+import createDOMPurify from 'dompurify';
+import urlJoin from 'url-join';
+
+import { CleanChapterParams } from './types.js';
 
 export class ChapterCleaner {
-  public cleanChapter(
-    rawChapter: string,
-    manifest: Manifest,
-    contentPath: string,
-    imageroot: string,
-    linkroot: string,
-  ): string {
-    // no multi line matches in JS regex!
-    rawChapter = this.removeLinebreaks(rawChapter);
-    rawChapter = this.keepOnlyBodyContents(rawChapter);
-    rawChapter = this.removeScriptBlocks(rawChapter);
-    rawChapter = this.removeStyleBlocks(rawChapter);
-    rawChapter = this.removeOnEventHandlers(rawChapter);
-    rawChapter = this.removeImages(
+  private static mockHost = 'https://mock.host';
+
+  public cleanChapter(params: CleanChapterParams): string {
+    const {
       rawChapter,
       manifest,
       contentPath,
-      imageroot,
-    );
-    rawChapter = this.replaceLinks(rawChapter, manifest, contentPath, linkroot);
-    rawChapter = this.bringBackLinebreaks(rawChapter);
-    return rawChapter;
-  }
+      linkRoot = '',
+      imageRoot = '',
+    } = params;
 
-  public bringBackLinebreaks(rawChapter: string): string {
-    return rawChapter.replace(/\u0000/g, '\n').trim(); // eslint-disable-line no-control-regex
-  }
+    const DOMPurify = createDOMPurify(window);
 
-  public removeImages(
-    rawChapter: string,
-    manifest: Manifest,
-    contentPath: string,
-    imageroot: string,
-  ) {
-    const keys = Object.keys(manifest);
-    return rawChapter.replace(
-      /(\ssrc\s*=\s*["']?)([^"'\s>]*?)(["'\s>])/g,
-      (_match, offset, str, groups) => {
-        const img = [contentPath, str].join('/').trim();
-        let element;
+    DOMPurify.addHook('uponSanitizeElement', (currentNode, data) => {
+      if (
+        data.tagName === 'img' &&
+        currentNode instanceof Element &&
+        'src' in currentNode.attributes
+      ) {
+        let parsedManifestHref: URL;
+        let fullSourcePath: string;
 
-        for (let i = 0, len = keys.length; i < len; i++) {
-          if (manifest[keys[i]].href == img) {
-            element = manifest[keys[i]];
-            break;
+        const currentNodeSrc = currentNode.getAttribute('src')?.trim();
+        const parsedNodeSrc = currentNodeSrc
+          ? new URL(currentNodeSrc, ChapterCleaner.mockHost)
+          : null;
+
+        const element = Object.values(manifest).find(({ href }) => {
+          if (!currentNodeSrc || !parsedNodeSrc) {
+            return false;
           }
-        }
 
-        // include only images from manifest
+          parsedManifestHref = new URL(href, ChapterCleaner.mockHost);
+          fullSourcePath =
+            contentPath && !parsedManifestHref.pathname.includes(contentPath)
+              ? urlJoin(contentPath, parsedManifestHref.pathname)
+              : parsedManifestHref.pathname;
+
+          return fullSourcePath.includes(parsedNodeSrc.pathname);
+        });
+
         if (element) {
-          return offset + imageroot + element.id + '/' + img + groups;
+          currentNode.setAttribute(
+            'src',
+            urlJoin(
+              imageRoot,
+              element.id,
+              fullSourcePath!,
+              parsedManifestHref!.search,
+              parsedManifestHref!.hash,
+            ),
+          );
         } else {
-          return '';
+          currentNode.remove();
         }
-      },
-    );
-  }
+      }
 
-  public replaceLinks(
-    rawChapter: string,
-    manifest: Manifest,
-    contentPath: string,
-    linkroot: string,
-  ): string {
-    const keys = Object.keys(manifest);
-    return rawChapter.replace(
-      /(\shref\s*=\s*["']?)([^"'\s>]*?)(["'\s>])/g,
-      (_match, offset, str, groups) => {
-        const linkparts = str && str.split('#');
-        let link = linkparts.length
-          ? [contentPath, linkparts.shift() || ''].join('/').trim()
-          : '';
-        let element;
+      if (
+        data.tagName === 'a' &&
+        currentNode instanceof Element &&
+        'href' in currentNode.attributes
+      ) {
+        let parsedManifestHref: URL;
+        let fullSourcePath: string;
 
-        for (let i = 0, len = keys.length; i < len; i++) {
-          if (manifest[keys[i]].href.split('#')[0] == link) {
-            element = manifest[keys[i]];
-            break;
+        const currentNodeHref = currentNode.getAttribute('href')?.trim();
+        const parsedNodeHref = currentNodeHref
+          ? new URL(currentNodeHref, ChapterCleaner.mockHost)
+          : null;
+
+        const element = Object.values(manifest).find(({ href }) => {
+          if (!currentNodeHref || !parsedNodeHref) {
+            return false;
           }
-        }
 
-        if (linkparts.length) {
-          link += '#' + linkparts.join('#');
-        }
+          parsedManifestHref = new URL(href, ChapterCleaner.mockHost);
+          fullSourcePath =
+            contentPath && !parsedManifestHref.pathname.includes(contentPath)
+              ? urlJoin(contentPath, parsedManifestHref.pathname)
+              : parsedManifestHref.pathname;
 
-        // include only images from manifest
+          return fullSourcePath.includes(parsedNodeHref.pathname);
+        });
+
         if (element) {
-          return offset + linkroot + element.id + '/' + link + groups;
-        } else {
-          return offset + str + groups;
+          return currentNode.setAttribute(
+            'href',
+            urlJoin(
+              linkRoot,
+              element.id,
+              fullSourcePath!,
+              parsedManifestHref!.search,
+              parsedManifestHref!.hash,
+            ),
+          );
         }
-      },
-    );
+
+        if (currentNodeHref) {
+          return currentNode.setAttribute(
+            'href',
+            urlJoin(
+              '',
+              parsedNodeHref!.pathname,
+              parsedNodeHref!.search,
+              parsedNodeHref!.hash,
+            ),
+          );
+        }
+      }
+    });
+
+    let processingChapter = DOMPurify.sanitize(rawChapter, {
+      FORBID_TAGS: ['style', 'html', 'head', 'body'],
+      ADD_ATTR: ['target'],
+    });
+
+    processingChapter = ChapterCleaner.minifyHTML(processingChapter);
+
+    return processingChapter;
   }
 
-  public removeOnEventHandlers(rawChapter: string) {
-    return rawChapter.replace(
-      /(\s)(on\w+)(\s*=\s*["']?[^"'\s>]*?["'\s>])/g,
-      function (_match, a, b, c) {
-        return a + 'skip-' + b + c;
-      },
-    );
-  }
+  private static minifyHTML(html: string) {
+    // remove comments
+    let result = html.replace(/<!--[\s\S]*?-->/g, '');
 
-  public removeStyleBlocks(rawChapter: string) {
-    return rawChapter.replace(
-      /<style[^>]*?>(.*?)<\/style[^>]*?>/gi,
-      function (_o, _s) {
-        return '';
-      },
-    );
-  }
+    // collapse whitespace
+    result = result.replace(/\s{2,}/g, ' ');
 
-  public removeScriptBlocks(rawChapter: string): string {
-    return rawChapter.replace(
-      /<script[^>]*?>(.*?)<\/script[^>]*?>/gi,
-      function (_o, _s) {
-        return '';
-      },
-    );
-  }
+    // remove whitespace between tags
+    result = result.replace(/>\s+</g, '><');
 
-  public keepOnlyBodyContents(rawChapter: string): string {
-    const match = rawChapter.match(/<body[^>]*?>(.*)<\/body[^>]*?>/i);
-    return match ? match[1] : rawChapter;
-  }
-
-  public removeLinebreaks(rawChapter: string): string {
-    return rawChapter.replace(/\r?\n/g, '\u0000');
+    return result.trim();
   }
 }
 

@@ -48,3 +48,11 @@ export interface ContentElement {
 }
 
 export type TableOfContents = ContentElement[];
+
+export type CleanChapterParams = {
+  rawChapter: string;
+  manifest: Manifest;
+  contentPath: string;
+  imageRoot?: string;
+  linkRoot?: string;
+};

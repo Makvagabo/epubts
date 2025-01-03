@@ -1,12 +1,15 @@
 # Changelog
 
-## next
+## 0.1.7
 
-* Add prettier
+- Add prettier
+- Use [dompurify](https://github.com/cure53/DOMPurify) to sanitize chapter input
+- Add more tests for chapter cleaning
+- Rename files to camelCase
 
 ## 0.1.6
 
-- Add events library as dependency because it is needed by xml2js
+- Add events library as dependency because it is needed by [xml2js](https://github.com/Leonidas-from-XIV/node-xml2js)
 
 ## 0.1.5
 

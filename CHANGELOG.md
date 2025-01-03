@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.1.7
+## 0.2.0
 
 - Add prettier
 - Use [dompurify](https://github.com/cure53/DOMPurify) to sanitize chapter input

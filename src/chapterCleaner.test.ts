@@ -1,26 +1,25 @@
 import { describe, expect, it } from 'vitest';
 
 import ChapterCleaner from './chapterCleaner.js';
-import { CleanChapterParams } from 'types.js';
+import { CleanChapterParams, Manifest } from 'types.js';
 
 describe('ChapterCleaner', () => {
-  describe('links', () => {
+  const minimalManifest = (): Manifest => {
+    return {
+      item1: {
+        href: 'content/chapter1.html',
+        id: 'chap1',
+        mediaType: '',
+      },
+    };
+  };
+
+  describe('deals with links:', () => {
     it.each([
       {
         testCase: 'replaces link when it matches an entry in the manifest',
         params: {
-          manifest: {
-            item1: {
-              href: 'content/chapter1.html',
-              id: 'chap1',
-              mediaType: '',
-            },
-            item2: {
-              href: 'content/chapter2.html',
-              id: 'chap2',
-              mediaType: '',
-            },
-          },
+          manifest: minimalManifest(),
           contentPath: 'content',
           linkRoot: 'root/',
           rawChapter: '<p>Read <a href="chapter1.html">Chapter 1</a></p>',
@@ -56,18 +55,7 @@ describe('ChapterCleaner', () => {
         testCase:
           'does not replace link when it does not match any entry in the manifest',
         params: {
-          manifest: {
-            item1: {
-              href: 'content/chapter1.html',
-              id: 'chap1',
-              mediaType: '',
-            },
-            item2: {
-              href: 'content/chapter2.html',
-              id: 'chap2',
-              mediaType: '',
-            },
-          },
+          manifest: minimalManifest(),
           contentPath: 'content',
           linkRoot: 'root/',
           rawChapter: '<p>Visit <a href="chapter3.html">Chapter 3</a></p>',
@@ -77,13 +65,7 @@ describe('ChapterCleaner', () => {
       {
         testCase: 'handles empty href attribute gracefully',
         params: {
-          manifest: {
-            item1: {
-              href: 'content/chapter1.html',
-              id: 'chap1',
-              mediaType: '',
-            },
-          },
+          manifest: minimalManifest(),
           contentPath: 'content',
           linkRoot: 'root/',
           rawChapter: '<p>Empty link <a href="">No Chapter</a></p>',
@@ -143,13 +125,7 @@ describe('ChapterCleaner', () => {
       {
         testCase: 'replaces link when href value is unquoted',
         params: {
-          manifest: {
-            item1: {
-              href: 'content/chapter1.html',
-              id: 'chap1',
-              mediaType: '',
-            },
-          },
+          manifest: minimalManifest(),
           contentPath: 'content',
           linkRoot: 'root/',
           rawChapter:
@@ -162,13 +138,7 @@ describe('ChapterCleaner', () => {
         testCase:
           'replaces link correctly when it contains additional attributes',
         params: {
-          manifest: {
-            item1: {
-              href: 'content/chapter1.html',
-              id: 'chap1',
-              mediaType: '',
-            },
-          },
+          manifest: minimalManifest(),
           contentPath: 'content',
           linkRoot: 'root/',
           rawChapter:
@@ -210,13 +180,7 @@ describe('ChapterCleaner', () => {
       {
         testCase: 'handles empty linkroot gracefully',
         params: {
-          manifest: {
-            item1: {
-              href: 'content/chapter1.html',
-              id: 'chap1',
-              mediaType: '',
-            },
-          },
+          manifest: minimalManifest(),
           contentPath: 'content',
           linkRoot: '',
           rawChapter: '<p>Read <a href="chapter1.html">Chapter 1</a></p>',
@@ -233,7 +197,7 @@ describe('ChapterCleaner', () => {
     });
   });
 
-  describe('images', () => {
+  describe('deals with images:', () => {
     it.each([
       {
         testCase: 'should return the same chapter when there are no image tags',
@@ -319,6 +283,37 @@ describe('ChapterCleaner', () => {
           imageRoot,
         }),
       ).toBe(expectedOutput);
+    });
+  });
+
+  describe('removes blocks:', () => {
+    it.each([
+      {
+        testCase: 'keeps only body contents',
+        params: {
+          manifest: minimalManifest(),
+          contentPath: 'content',
+          linkRoot: '',
+          rawChapter: '<html><head></head><body>test</body></html>',
+        },
+        expectedOutput: 'test',
+      },
+      {
+        testCase: 'removes script blocks',
+        params: {
+          manifest: minimalManifest(),
+          contentPath: 'content',
+          linkRoot: '',
+          rawChapter: '<script>test</script>',
+        },
+        expectedOutput: '',
+      },
+    ] as Array<{
+      testCase: string;
+      params: CleanChapterParams;
+      expectedOutput: string;
+    }>)('$testCase', ({ params, expectedOutput }) => {
+      expect(ChapterCleaner.cleanChapter(params)).toBe(expectedOutput);
     });
   });
 });

@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import ChapterCleaner from './chaptercleaner.js';
+import ChapterCleaner from './chapterCleaner.js';
 import { CleanChapterParams } from 'types.js';
 
 describe('ChapterCleaner', () => {

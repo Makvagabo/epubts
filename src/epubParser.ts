@@ -10,7 +10,7 @@ import {
   TableOfContents,
 } from './types.js';
 
-class EPubParser {
+class EpubParser {
   private parser: Parser;
 
   public constructor() {
@@ -415,4 +415,4 @@ class EPubParser {
   }
 }
 
-export default new EPubParser();
+export default new EpubParser();

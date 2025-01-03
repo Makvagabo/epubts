@@ -1,6 +1,6 @@
 import JSZip from 'jszip';
-import { Epubfactory } from './epubfactory.js';
-import ChapterCleaner from './chaptercleaner.js';
+import { EpubFactory } from './epubFactory.js';
+import ChapterCleaner from './chapterCleaner.js';
 import {
   ContentFile,
   Manifest,
@@ -89,7 +89,7 @@ export class EPub {
   }
 
   public static async load(file: File) {
-    return Epubfactory.load(file);
+    return EpubFactory.load(file);
   }
 }
 
